@@ -370,6 +370,122 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 /* ===== fim Arena Clean ===== */</style>
 </head>
 <body>
+
+<!-- ══════════════════════════════════════════════════════
+     CONTROLE DE ACESSO — ajuste os valores abaixo antes
+     de cada torneio e rode o push para publicar.
+     ══════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  var ACCESS = {
+    senha:        'volei2026',            // senha do torneio
+    inicio:       '2026-11-01 07:00',     // data e hora de abertura (formato: AAAA-MM-DD HH:MM)
+    duracaoHoras: 24,                     // horas de acesso após o início
+    torneio:      'ERP Vôlei — Torneio'  // nome exibido na tela de acesso
+  };
+
+  var KEY = 'erp_acesso_ok';
+
+  function parseLocal(str) {
+    var p = str.split(/[\s:-]/);
+    return new Date(+p[0], +p[1]-1, +p[2], +p[3], +p[4]);
+  }
+
+  function checkWindow() {
+    var now   = new Date();
+    var start = parseLocal(ACCESS.inicio);
+    var end   = new Date(start.getTime() + ACCESS.duracaoHoras * 3600000);
+    if (now < start) return 'antes';
+    if (now > end)   return 'expirado';
+    return 'ok';
+  }
+
+  function liberarApp() {
+    var lock = document.getElementById('erp-lock');
+    if (lock) lock.remove();
+  }
+
+  function mostrarLock() {
+    var status = checkWindow();
+
+    var css = [
+      '#erp-lock{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;',
+      'background:linear-gradient(135deg,#1e2330 0%,#16a34a22 100%);font-family:Inter,system-ui,sans-serif}',
+      '#erp-lock .box{background:#fff;border-radius:16px;padding:40px 36px;max-width:380px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}',
+      '#erp-lock .logo{font-size:2rem;margin-bottom:4px}',
+      '#erp-lock h2{margin:0 0 4px;font-size:1.25rem;color:#111827}',
+      '#erp-lock .sub{color:#6b7280;font-size:.88rem;margin:0 0 24px}',
+      '#erp-lock .msg{padding:12px 16px;border-radius:8px;font-size:.9rem;margin-bottom:16px}',
+      '#erp-lock .msg.info{background:#dbeafe;color:#1e40af}',
+      '#erp-lock .msg.danger{background:#fee2e2;color:#991b1b}',
+      '#erp-lock input{width:100%;padding:10px 14px;border:1.5px solid #d1d5db;border-radius:8px;font-size:1rem;',
+      'outline:none;margin-bottom:12px;box-sizing:border-box}',
+      '#erp-lock input:focus{border-color:#16a34a}',
+      '#erp-lock button{width:100%;padding:11px;background:#16a34a;color:#fff;border:none;border-radius:8px;',
+      'font-size:1rem;font-weight:600;cursor:pointer}',
+      '#erp-lock button:hover{background:#15803d}',
+      '#erp-lock .err{color:#dc2626;font-size:.82rem;margin-top:6px;min-height:18px}'
+    ].join('');
+
+    var style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    var inner = '';
+    if (status === 'antes') {
+      inner = '<div class="msg info">⏳ O acesso a este torneio ainda não foi liberado.<br>Aguarde o organizador.</div>';
+    } else if (status === 'expirado') {
+      inner = '<div class="msg danger">🔒 O acesso a este torneio foi encerrado.</div>';
+    } else {
+      inner = [
+        '<input id="erp-pwd" type="password" placeholder="Digite a senha do torneio" autocomplete="off">',
+        '<button id="erp-btn">Acessar →</button>',
+        '<div class="err" id="erp-err"></div>'
+      ].join('');
+    }
+
+    var lock = document.createElement('div');
+    lock.id = 'erp-lock';
+    lock.innerHTML = [
+      '<div class="box">',
+      '<div class="logo">🏐</div>',
+      '<h2>' + ACCESS.torneio + '</h2>',
+      '<p class="sub">Sistema de gestão de torneio</p>',
+      inner,
+      '</div>'
+    ].join('');
+    document.body.insertBefore(lock, document.body.firstChild);
+
+    if (status === 'ok') {
+      var btn = document.getElementById('erp-btn');
+      var pwd = document.getElementById('erp-pwd');
+      var err = document.getElementById('erp-err');
+
+      function tentar() {
+        if (checkWindow() !== 'ok') { err.textContent = 'Acesso expirado.'; return; }
+        if (pwd.value === ACCESS.senha) {
+          try { sessionStorage.setItem(KEY, '1'); } catch(e){}
+          liberarApp();
+        } else {
+          err.textContent = 'Senha incorreta.';
+          pwd.value = '';
+          pwd.focus();
+        }
+      }
+      btn.addEventListener('click', tentar);
+      pwd.addEventListener('keydown', function(e){ if(e.key==='Enter') tentar(); });
+      setTimeout(function(){ pwd.focus(); }, 100);
+    }
+  }
+
+  // Já autenticou nesta sessão?
+  try { if (sessionStorage.getItem(KEY) === '1' && checkWindow() === 'ok') return; } catch(e){}
+
+  document.addEventListener('DOMContentLoaded', mostrarLock);
+})();
+</script>
+<!-- ══════════════════════════════════════════════════════ -->
+
 <div id="app"></div>
 <noscript>Este aplicativo precisa de JavaScript.</noscript>
 
