@@ -466,6 +466,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         if (pwd.value === ACCESS.senha) {
           try { sessionStorage.setItem(KEY, '1'); } catch(e){}
           liberarApp();
+          iniciarTimer();
         } else {
           err.textContent = 'Senha incorreta.';
           pwd.value = '';
@@ -478,8 +479,23 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     }
   }
 
+  // Timer: verifica a cada 30 segundos se o acesso ainda é válido
+  function iniciarTimer() {
+    setInterval(function () {
+      if (checkWindow() !== 'ok' && !document.getElementById('erp-lock')) {
+        try { sessionStorage.removeItem(KEY); } catch(e){}
+        mostrarLock();
+      }
+    }, 30000);
+  }
+
   // Já autenticou nesta sessão?
-  try { if (sessionStorage.getItem(KEY) === '1' && checkWindow() === 'ok') return; } catch(e){}
+  try {
+    if (sessionStorage.getItem(KEY) === '1' && checkWindow() === 'ok') {
+      iniciarTimer();
+      return;
+    }
+  } catch(e){}
 
   document.addEventListener('DOMContentLoaded', mostrarLock);
 })();
