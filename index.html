@@ -152,7 +152,24 @@ input:focus,select:focus{border-color:var(--primary)}
 
 /* responsivo básico */
 @media (max-width:1100px){.tiles{grid-template-columns:repeat(3,1fr)} .two-col{grid-template-columns:1fr}}
-@media (max-width:900px){
+/* Bottom nav — mobile */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--sidebar);border-top:1px solid rgba(255,255,255,.08);padding-bottom:env(safe-area-inset-bottom,0px)}
+.bottom-nav a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px 6px;color:var(--sidebar-text);text-decoration:none!important;font-size:.62rem;font-weight:500;gap:2px;transition:color .15s}
+.bottom-nav a .bn-glyph{font-size:1.35rem;line-height:1}
+.bottom-nav a.active{color:#16a34a}
+.bottom-nav a:hover{color:#fff}
+
+@media (max-width:768px){
+  .sidebar{display:none!important}
+  .bottom-nav{display:flex}
+  .main{width:100%}
+  .topbar,.tbar{padding-left:14px;padding-right:14px}
+  .content{padding:14px 14px 80px}
+  .tiles{grid-template-columns:repeat(2,1fr)} .form.grid{grid-template-columns:1fr} .teams-layout{grid-template-columns:1fr}
+  .cat-list{flex-direction:row;overflow-x:auto} .inline-add{grid-template-columns:1fr}
+  .topbar{position:sticky;top:0;z-index:100;background:var(--surface);border-bottom:1px solid var(--border)}
+}
+@media (max-width:900px) and (min-width:769px){
   .app{flex-direction:column} .sidebar{width:auto;height:auto;position:static;flex-direction:row;align-items:center;padding:8px 10px;gap:8px;overflow-x:auto}
   .brand{padding:0 8px 0 0} .brand small,.side-foot{display:none} .side-nav{flex-direction:row;gap:2px} .nav-item{white-space:nowrap;padding:8px 10px}
   .topbar,.tbar{padding-left:16px;padding-right:16px} .content{padding:18px 16px 50px}
@@ -4881,6 +4898,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     this.actions = h('div', { class: 'topbar-actions' });
     this.tbar = h('div', { class: 'tbar', hidden: true });
     this.view = h('main', { class: 'content', id: 'view', tabindex: '-1' });
+    this.bottomNav = h('nav', { class: 'bottom-nav', 'aria-label': 'Navegação' });
     ui.clear(this.rootEl);
     this.rootEl.appendChild(h('div', { class: 'app' },
       h('aside', { class: 'sidebar' },
@@ -4888,6 +4906,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         this.nav,
         h('div', { class: 'side-foot' }, h('span', { class: 'dot' }), 'Funciona sem internet', h('br'), 'Dados salvos neste aparelho')),
       h('div', { class: 'main' }, h('header', { class: 'topbar' }, this.crumbs, this.actions), this.tbar, this.view)));
+    this.rootEl.appendChild(this.bottomNav);
     this.rootEl.appendChild(h('div', { id: 'toasts', 'aria-live': 'polite' }));
     root.addEventListener('hashchange', function () { self.render(); });
   };
@@ -4960,6 +4979,14 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       var href = n.href || (t ? '/t/' + t.id + n.scoped : n.scoped);
       self.nav.appendChild(h('a', { class: 'nav-item' + (r.section === n.id ? ' active' : ''), href: '#' + href, 'aria-current': r.section === n.id ? 'page' : null },
         h('span', { class: 'glyph', 'aria-hidden': 'true' }, n.glyph), n.label));
+    });
+    // bottom nav (mobile)
+    ui.clear(this.bottomNav);
+    ui.GLOBAL_NAV.forEach(function (n) {
+      var href = n.href || (t ? '/t/' + t.id + n.scoped : n.scoped);
+      self.bottomNav.appendChild(h('a', { class: r.section === n.id ? 'active' : '', href: '#' + href, 'aria-current': r.section === n.id ? 'page' : null },
+        h('span', { class: 'bn-glyph', 'aria-hidden': 'true' }, n.glyph),
+        h('span', null, n.label)));
     });
     // migalhas + ações
     ui.clear(this.crumbs);
