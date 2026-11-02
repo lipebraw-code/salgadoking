@@ -215,6 +215,11 @@ input:focus,select:focus{border-color:var(--primary)}
 .ko-round{min-width:200px;flex-shrink:0}
 .ko-round-title{font-size:.9rem;font-weight:600;color:var(--muted);margin:0 0 10px;text-transform:uppercase;letter-spacing:.03em}
 .ko-match{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden}
+.ko-match.live{border-color:#dc2626}
+.ko-live-bar{display:flex;justify-content:center;padding:4px 8px;background:#fff0f0;border-bottom:1px solid #fecaca}
+.badge.ao-vivo{background:#dc2626;color:#fff;animation:pulse-live 1.4s ease-in-out infinite}
+.badge.ao-vivo::before{content:'● ';font-size:.7em}
+@keyframes pulse-live{0%,100%{opacity:1}50%{opacity:.55}}
 .ko-match-edit .ko-team{cursor:pointer}
 .ko-match-edit .ko-team:hover{background:var(--hover,rgba(0,0,0,.04))}
 .ko-slot-edit{border-bottom:2px dashed var(--accent,#3b82f6);padding-bottom:1px}
@@ -6068,7 +6073,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       h('td', { class: 'team-b' + (m.status === 'finalizado' && SC.matchWinner(m.sets, 1) === 'B' ? ' winner' : '') }, slotBName),
       h('td', { class: 'sets' }, setsText),
       h('td', null, schedText),
-      h('td', null, ui.badge(STATUS_LABEL[m.status] || m.status, STATUS_TONE[m.status])),
+      h('td', null, m.status === 'andamento' ? ui.badge('AO VIVO', 'ao-vivo') : ui.badge(STATUS_LABEL[m.status] || m.status, STATUS_TONE[m.status])),
       h('td', { class: 'actions' }, matchActions(m, teams, ctx, matchesById, tournament, category))
     );
   }
@@ -6258,7 +6263,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     var summary = h('div', { class: 'matches-summary', dataset: { testid: 'matches-summary' } },
       h('span', null, ui.plural(state.total, 'jogo', 'jogos')),
       state.byStatus.finalizado ? h('span', { class: 'badge success' }, state.byStatus.finalizado + ' finalizado(s)') : null,
-      state.byStatus.andamento ? h('span', { class: 'badge accent' }, state.byStatus.andamento + ' em andamento') : null,
+      state.byStatus.andamento ? h('span', { class: 'badge ao-vivo' }, state.byStatus.andamento + ' AO VIVO') : null,
       state.byStatus.agendado ? h('span', { class: 'badge info' }, state.byStatus.agendado + ' agendado(s)') : null,
       state.byStatus.aguardando ? h('span', { class: 'badge muted' }, state.byStatus.aguardando + ' aguardando') : null,
       state.byStatus.cancelado ? h('span', { class: 'badge muted' }, state.byStatus.cancelado + ' cancelado(s)') : null
@@ -6546,7 +6551,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           var slotBClass = 'ko-name' + (isEditing ? (isSelB ? ' ko-slot-sel' : ' ko-slot-edit') : '');
           var onClickA = isEditing ? function () { editOpts.onSlotClick(m.id, 'slotA'); } : null;
           var onClickB = isEditing ? function () { editOpts.onSlotClick(m.id, 'slotB'); } : null;
-          return h('div', { class: 'ko-match' + (m.status === 'finalizado' ? ' finished' : '') + (pending ? ' pending' : '') + (isEditing ? ' ko-match-edit' : ''), dataset: { testid: 'ko-match-' + m.id.slice(-4) } },
+          return h('div', { class: 'ko-match' + (m.status === 'finalizado' ? ' finished' : '') + (m.status === 'andamento' ? ' live' : '') + (pending ? ' pending' : '') + (isEditing ? ' ko-match-edit' : ''), dataset: { testid: 'ko-match-' + m.id.slice(-4) } },
+            m.status === 'andamento' ? h('div', { class: 'ko-live-bar' }, h('span', { class: 'badge ao-vivo' }, 'AO VIVO')) : null,
             h('div', { class: 'ko-team' + (winA ? ' winner' : ''), onClick: onClickA },
               h('span', { class: slotAClass }, slotLabel(m.slotA, teamsById, matchLabels, matchesById)), wcBadgeA,
               h('span', { class: 'ko-score' }, scoreA)
@@ -7194,7 +7200,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         )
       ),
       h('div', { class: 'ko-detail-meta' },
-        ui.badge(STATUS_LABEL[m.status] || m.status, STATUS_TONE[m.status]),
+        m.status === 'andamento' ? ui.badge('AO VIVO', 'ao-vivo') : ui.badge(STATUS_LABEL[m.status] || m.status, STATUS_TONE[m.status]),
         m.schedule ? h('span', { class: 'ko-detail-schedule' },
           [m.schedule.date ? ui.fmtDate(m.schedule.date) : '', m.schedule.time || '', m.schedule.court ? 'Quadra ' + m.schedule.court : ''].filter(Boolean).join(' · ')
         ) : null
