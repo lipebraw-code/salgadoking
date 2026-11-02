@@ -457,6 +457,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 .view-team-row{display:flex;justify-content:space-between;align-items:center;font-size:.9rem}
 .view-team-row.winner{font-weight:700}
 .view-score{font-weight:700;color:var(--primary,#3b82f6);min-width:24px;text-align:right}
+.view-sets-detail{font-size:.72rem;color:var(--muted,#6b7280);margin:4px 0 0;text-align:right}
 .view-meta{font-size:.75rem;color:var(--muted,#6b7280);margin-top:6px}
 .view-empty{text-align:center;padding:32px 16px;color:var(--muted,#6b7280);font-size:.88rem}
 .view-refresh-info{text-align:center;font-size:.72rem;color:var(--muted,#6b7280);margin-top:20px;padding-top:12px;border-top:1px solid var(--border,#e5e7eb)}
@@ -8105,40 +8106,58 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 
   function teamName(teams, id) {
     var t = teams.find(function (x) { return x.id === id; });
-    return t ? t.name : (id || '—');
+    return t ? t.name : '—';
   }
 
-  function isLive(m) { return m.status === 'andamento' || m.status === 'live' || m.status === 'em_andamento'; }
-  function isScheduled(m) { return m.status === 'agendado' || m.status === 'aguardando' || m.status === 'scheduled' || m.status === 'pendente' || !m.status; }
+  function slotLabel(slot, teams) {
+    if (!slot) return '—';
+    if (slot.type === 'team') return teamName(teams, slot.teamId);
+    return 'A definir';
+  }
+
+  function isLive(m) { return m.status === 'andamento' || m.status === 'live'; }
+  function isScheduled(m) { return m.status === 'agendado' || m.status === 'aguardando' || !m.status; }
   function isFinished(m) { return m.status === 'finalizado' || m.status === 'finished'; }
 
   function renderMatchCard(m, teams, showLive) {
     var live = showLive && isLive(m);
-    var a = teamName(teams, m.teamA || m.homeTeamId);
-    var b = teamName(teams, m.teamB || m.awayTeamId);
-    var scoreA = m.scoreA != null ? m.scoreA : (m.homeScore != null ? m.homeScore : '');
-    var scoreB = m.scoreB != null ? m.scoreB : (m.awayScore != null ? m.awayScore : '');
-    var hasScore = scoreA !== '' && scoreB !== '';
-    var winA = hasScore && Number(scoreA) > Number(scoreB);
-    var winB = hasScore && Number(scoreB) > Number(scoreA);
+    var a = slotLabel(m.slotA, teams);
+    var b = slotLabel(m.slotB, teams);
 
-    var header = [
-      h('div', { class: 'view-card-header' }, [
-        h('span', { class: 'view-meta', style: 'font-size:.75rem' }, [m.court || m.quadra || '']),
-        live ? h('span', { class: 'badge ao-vivo' }, ['AO VIVO']) : h('span', { class: 'view-meta' }, [m.scheduledTime || m.horario || ''])
-      ])
-    ];
-    var teams2 = h('div', { class: 'view-teams' }, [
+    // placar: conta sets ganhos
+    var sets = m.sets || [];
+    var setsA = sets.filter(function (s) { return s.a > s.b; }).length;
+    var setsB = sets.filter(function (s) { return s.b > s.a; }).length;
+    var hasScore = sets.length > 0;
+    var winA = hasScore && setsA > setsB;
+    var winB = hasScore && setsB > setsA;
+
+    // detalhe dos sets ex: "12-15 / 15-9"
+    var setsDetail = sets.map(function (s) { return s.a + '-' + s.b; }).join(' / ');
+
+    var sch = m.schedule || {};
+    var court = sch.court ? 'Q' + sch.court : '';
+    var time  = sch.time  || '';
+
+    var header = h('div', { class: 'view-card-header' }, [
+      h('span', { class: 'view-meta' }, [court]),
+      live ? h('span', { class: 'badge ao-vivo' }, ['AO VIVO'])
+           : h('span', { class: 'view-meta' }, [time])
+    ]);
+    var teamsEl = h('div', { class: 'view-teams' }, [
       h('div', { class: 'view-team-row' + (winA ? ' winner' : '') }, [
         h('span', {}, [a]),
-        hasScore ? h('span', { class: 'view-score' }, [String(scoreA)]) : h('span', {})
+        hasScore ? h('span', { class: 'view-score' }, [String(setsA)]) : h('span', {})
       ]),
       h('div', { class: 'view-team-row' + (winB ? ' winner' : '') }, [
         h('span', {}, [b]),
-        hasScore ? h('span', { class: 'view-score' }, [String(scoreB)]) : h('span', {})
+        hasScore ? h('span', { class: 'view-score' }, [String(setsB)]) : h('span', {})
       ])
     ]);
-    return h('div', { class: 'view-card' + (live ? ' live' : '') }, header.concat([teams2]));
+    var detail = hasScore ? h('p', { class: 'view-sets-detail' }, [setsDetail]) : null;
+    var children = [header, teamsEl];
+    if (detail) children.push(detail);
+    return h('div', { class: 'view-card' + (live ? ' live' : '') }, children);
   }
 
   ui.route('/view', function (ctx) {
