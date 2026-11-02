@@ -1,0 +1,193 @@
+{
+  "tournament": {
+    "id": "trn_3227729d-29d6-4bca-b310-b5b3d8ae2ec4",
+    "createdAt": "2026-10-31T04:56:06.920Z",
+    "updatedAt": "2026-10-31T04:56:06.920Z",
+    "revision": 1,
+    "name": "COPA OURO",
+    "startDate": "2026-10-31",
+    "endDate": "2026-10-31",
+    "venue": "ARENA BROTHERS",
+    "modality": "areia",
+    "catalogs": {
+      "genders": [
+        {
+          "key": "masculino",
+          "label": "Masculino"
+        },
+        {
+          "key": "feminino",
+          "label": "Feminino"
+        },
+        {
+          "key": "misto",
+          "label": "Misto"
+        }
+      ],
+      "levels": [
+        {
+          "key": "iniciante",
+          "label": "Iniciante"
+        },
+        {
+          "key": "amador",
+          "label": "Amador"
+        },
+        {
+          "key": "intermediario",
+          "label": "Intermediário"
+        },
+        {
+          "key": "avancado",
+          "label": "Avançado"
+        },
+        {
+          "key": "open",
+          "label": "Open"
+        },
+        {
+          "key": "profissional",
+          "label": "Profissional"
+        }
+      ],
+      "teamTypes": [
+        {
+          "key": "dupla",
+          "label": "Dupla",
+          "size": 2
+        },
+        {
+          "key": "trio",
+          "label": "Trio",
+          "size": 3
+        },
+        {
+          "key": "quarteto",
+          "label": "Quarteto",
+          "size": 4
+        },
+        {
+          "key": "6x6",
+          "label": "6x6",
+          "size": 6
+        }
+      ]
+    },
+    "status": "preparacao",
+    "licenseOrigin": null,
+    "licenseCheck": "none"
+  },
+  "matches": [],
+  "teams": [],
+  "categories": [
+    {
+      "id": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "createdAt": "2026-10-31T04:56:47.683Z",
+      "updatedAt": "2026-10-31T04:56:49.119Z",
+      "revision": 2,
+      "tournamentId": "trn_3227729d-29d6-4bca-b310-b5b3d8ae2ec4",
+      "name": "FEMININO INICIANTE",
+      "gender": {
+        "key": "feminino",
+        "label": "Feminino"
+      },
+      "level": {
+        "key": "iniciante",
+        "label": "Iniciante"
+      },
+      "modality": "areia",
+      "teamType": {
+        "key": "dupla",
+        "label": "Dupla",
+        "size": 2
+      },
+      "useAthletes": false,
+      "teamsCount": 9,
+      "scoringRuleId": null,
+      "tiebreakRuleId": "tbr_4cceb05e-ae77-43d7-8b99-8ca0a043dfa7",
+      "structureMode": null,
+      "defaultMatchFormat": {
+        "bestOf": 1,
+        "pointsToWin": 15,
+        "tiebreakPoints": null,
+        "minDiff": null,
+        "maxPoints": null
+      },
+      "active": true,
+      "status": "configuracao"
+    },
+    {
+      "id": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "createdAt": "2026-10-31T04:57:10.638Z",
+      "updatedAt": "2026-10-31T16:12:58.737Z",
+      "revision": 5,
+      "tournamentId": "trn_3227729d-29d6-4bca-b310-b5b3d8ae2ec4",
+      "name": "MASCULINO INICIANTE",
+      "gender": {
+        "key": "masculino",
+        "label": "Masculino"
+      },
+      "level": {
+        "key": "iniciante",
+        "label": "Iniciante"
+      },
+      "modality": "areia",
+      "teamType": {
+        "key": "dupla",
+        "label": "Dupla",
+        "size": 2
+      },
+      "useAthletes": false,
+      "teamsCount": 16,
+      "scoringRuleId": null,
+      "tiebreakRuleId": "tbr_4cceb05e-ae77-43d7-8b99-8ca0a043dfa7",
+      "structureMode": null,
+      "defaultMatchFormat": {
+        "bestOf": 1,
+        "pointsToWin": 15,
+        "tiebreakPoints": null,
+        "minDiff": null,
+        "maxPoints": null
+      },
+      "active": false,
+      "status": "configuracao"
+    },
+    {
+      "id": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "createdAt": "2026-10-31T16:10:07.895Z",
+      "updatedAt": "2026-10-31T16:14:11.533Z",
+      "revision": 6,
+      "tournamentId": "trn_3227729d-29d6-4bca-b310-b5b3d8ae2ec4",
+      "name": "MASCULINO INICIANTE V2",
+      "gender": {
+        "key": "masculino",
+        "label": "Masculino"
+      },
+      "level": {
+        "key": "iniciante",
+        "label": "Iniciante"
+      },
+      "modality": "areia",
+      "teamType": {
+        "key": "dupla",
+        "label": "Dupla",
+        "size": 2
+      },
+      "useAthletes": false,
+      "teamsCount": 16,
+      "scoringRuleId": null,
+      "tiebreakRuleId": "tbr_4cceb05e-ae77-43d7-8b99-8ca0a043dfa7",
+      "structureMode": null,
+      "defaultMatchFormat": {
+        "bestOf": 1,
+        "pointsToWin": 15,
+        "tiebreakPoints": null,
+        "minDiff": null,
+        "maxPoints": null
+      },
+      "active": true,
+      "status": "configuracao"
+    }
+  ],
+  "publishedAt": "2026-11-02T22:19:46.683Z"
+}
