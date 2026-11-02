@@ -472,32 +472,30 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     ].join('');
     document.body.insertBefore(lock, document.body.firstChild);
 
-    if (status === 'ok') {
-      var btn = document.getElementById('erp-btn');
-      var pwd = document.getElementById('erp-pwd');
-      var err = document.getElementById('erp-err');
+    var btn = document.getElementById('erp-btn');
+    var pwd = document.getElementById('erp-pwd');
+    var err = document.getElementById('erp-err');
 
-      function tentar() {
-        if (pwd.value === ACCESS.senhaAdmin) {
-          try { sessionStorage.setItem(KEY, 'admin'); } catch(e){}
-          liberarApp();
-          return;
-        }
-        if (checkWindow() !== 'ok') { err.textContent = 'Acesso expirado.'; return; }
-        if (pwd.value === ACCESS.senha) {
-          try { sessionStorage.setItem(KEY, '1'); } catch(e){}
-          liberarApp();
-          iniciarTimer();
-        } else {
-          err.textContent = 'Senha incorreta.';
-          pwd.value = '';
-          pwd.focus();
-        }
+    function tentar() {
+      if (pwd.value === ACCESS.senhaAdmin) {
+        try { sessionStorage.setItem(KEY, 'admin'); } catch(e){}
+        liberarApp();
+        return;
       }
-      btn.addEventListener('click', tentar);
-      pwd.addEventListener('keydown', function(e){ if(e.key==='Enter') tentar(); });
-      setTimeout(function(){ pwd.focus(); }, 100);
+      if (checkWindow() !== 'ok') { err.textContent = 'Acesso expirado.'; return; }
+      if (pwd.value === ACCESS.senha) {
+        try { sessionStorage.setItem(KEY, '1'); } catch(e){}
+        liberarApp();
+        iniciarTimer();
+      } else {
+        err.textContent = 'Senha incorreta.';
+        pwd.value = '';
+        pwd.focus();
+      }
     }
+    btn.addEventListener('click', tentar);
+    pwd.addEventListener('keydown', function(e){ if(e.key==='Enter') tentar(); });
+    setTimeout(function(){ pwd.focus(); }, 100);
   }
 
   // Timer: verifica a cada 30 segundos se o acesso ainda é válido
