@@ -393,7 +393,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 <script>
 (function () {
   var ACCESS = {
-    senha:        'RiquelmeLindo',         // senha do torneio
+    senha:        'RiquelmeLindo',         // senha do torneio (respeita janela de horário)
+    senhaAdmin:   'SalgadoKing07',         // senha admin — acesso permanente, ignora horário
     inicio:       '2026-11-01 16:20',     // data e hora de abertura (formato: AAAA-MM-DD HH:MM)
     duracaoHoras: 20,                     // horas de acesso após o início
     torneio:      'ERP Vôlei — Torneio'  // nome exibido na tela de acesso
@@ -477,6 +478,11 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       var err = document.getElementById('erp-err');
 
       function tentar() {
+        if (pwd.value === ACCESS.senhaAdmin) {
+          try { sessionStorage.setItem(KEY, 'admin'); } catch(e){}
+          liberarApp();
+          return;
+        }
         if (checkWindow() !== 'ok') { err.textContent = 'Acesso expirado.'; return; }
         if (pwd.value === ACCESS.senha) {
           try { sessionStorage.setItem(KEY, '1'); } catch(e){}
@@ -506,10 +512,9 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 
   // Já autenticou nesta sessão?
   try {
-    if (sessionStorage.getItem(KEY) === '1' && checkWindow() === 'ok') {
-      iniciarTimer();
-      return;
-    }
+    var saved = sessionStorage.getItem(KEY);
+    if (saved === 'admin') { return; }  // admin: sem verificação de horário
+    if (saved === '1' && checkWindow() === 'ok') { iniciarTimer(); return; }
   } catch(e){}
 
   document.addEventListener('DOMContentLoaded', mostrarLock);
