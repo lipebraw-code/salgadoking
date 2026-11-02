@@ -598,11 +598,24 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
   }
 
   // Rota /view é pública (atletas via QR Code) — sem lock, só janela de tempo
+  // A janela pode vir nos params da URL: #/view?s=2026-11-02T18:00&h=20
   if (location.hash.indexOf('#/view') === 0) {
-    var w = checkWindow();
-    if (w === 'ok') { return; }
+    var hashQuery = location.hash.split('?')[1] || '';
+    var qp = {};
+    hashQuery.split('&').forEach(function(p){ var kv=p.split('='); if(kv[0]) qp[kv[0]]=decodeURIComponent(kv[1]||''); });
+    var wCheck;
+    if (qp.s && qp.h) {
+      // usa params da URL (QR Code) — independente do localStorage
+      var now2 = new Date();
+      var st2 = new Date(qp.s.replace(' ','T'));
+      var en2 = new Date(st2.getTime() + Number(qp.h) * 3600000);
+      wCheck = now2 < st2 ? 'before' : now2 > en2 ? 'after' : 'ok';
+    } else {
+      wCheck = checkWindow();
+    }
+    if (wCheck === 'ok') { return; }
     document.addEventListener('DOMContentLoaded', function() {
-      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:12px;background:#0f172a;color:#94a3b8"><span style="font-size:2rem">⏰</span><strong style="color:#f1f5f9">Acesso encerrado</strong><span>' + (w === 'before' ? 'Torneio ainda não iniciou.' : 'Período do torneio encerrado.') + '</span></div>';
+      document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;flex-direction:column;gap:12px;background:#0f172a;color:#94a3b8"><span style="font-size:2rem">⏰</span><strong style="color:#f1f5f9">Acesso encerrado</strong><span>' + (wCheck === 'before' ? 'Torneio ainda não iniciou.' : 'Período do torneio encerrado.') + '</span></div>';
     });
     return;
   }
@@ -7910,7 +7923,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       var newSt = statusInfo();
       statusDiv.className = 'acesso-status ' + newSt.code;
       statusDiv.textContent = newSt.label;
-      renderQR(updated.viewUrl, qrWrap);
+      renderQR(buildViewUrl(updated), qrWrap);
       alert('Configurações salvas!');
     }
 
@@ -7938,7 +7951,12 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       navigator.clipboard && navigator.clipboard.writeText(viewUrlInput.value).then(function () { copyBtn.textContent = 'Copiado!'; setTimeout(function () { copyBtn.textContent = 'Copiar'; }, 2000); });
     }}, ['Copiar']);
 
-    setTimeout(function () { renderQR(cfg.viewUrl, qrWrap); }, 0);
+    function buildViewUrl(c) {
+      if (!c.viewUrl) return '';
+      var base = c.viewUrl.split('?')[0];
+      return base + '?s=' + encodeURIComponent(c.inicio) + '&h=' + c.duracaoHoras;
+    }
+    setTimeout(function () { renderQR(buildViewUrl(cfg), qrWrap); }, 0);
 
     var content = h('div', { class: 'acesso-panel' }, [
       h('div', { class: 'acesso-section' }, [
