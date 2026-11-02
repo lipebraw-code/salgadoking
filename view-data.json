@@ -77,8 +77,2498 @@
     "licenseOrigin": null,
     "licenseCheck": "none"
   },
-  "matches": [],
-  "teams": [],
+  "matches": [
+    {
+      "id": "mch_4b045a44-ec6e-452d-8ae1-51136a053bc8",
+      "createdAt": "2026-10-31T05:03:00.726Z",
+      "updatedAt": "2026-10-31T12:54:53.523Z",
+      "revision": 8,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_fc42adad-0066-4269-8ef4-689eedd4a8a6",
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_09b40551-763c-4a3c-a20e-ef44881509c5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0b75c3bc-a55c-4849-8001-639c8e6247f1"
+      },
+      "schedule": {
+        "date": "2026-10-31",
+        "time": "09:00",
+        "court": "2"
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 12,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_909c51f7-82d1-43e0-a7cc-22504e3b77df",
+      "createdAt": "2026-10-31T05:03:00.729Z",
+      "updatedAt": "2026-10-31T13:10:24.880Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_fc42adad-0066-4269-8ef4-689eedd4a8a6",
+      "round": 2,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_884162d4-b33f-44a4-adff-bfb161eef766"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0b75c3bc-a55c-4849-8001-639c8e6247f1"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 9
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_de041ca0-ef92-44fd-9b12-381a719d6f8b",
+      "createdAt": "2026-10-31T05:03:00.732Z",
+      "updatedAt": "2026-10-31T13:29:08.949Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_fc42adad-0066-4269-8ef4-689eedd4a8a6",
+      "round": 3,
+      "order": 3,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_884162d4-b33f-44a4-adff-bfb161eef766"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_09b40551-763c-4a3c-a20e-ef44881509c5"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_dacdf4fc-cedd-4bd9-bf16-a3ad5ba102cc",
+      "createdAt": "2026-10-31T05:03:00.734Z",
+      "updatedAt": "2026-10-31T12:48:47.482Z",
+      "revision": 7,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_5cd1a2fb-3588-4e8a-a50b-064a8054fefc",
+      "round": 1,
+      "order": 4,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_335444b4-abe4-4104-91fc-cf264553caea"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_a8af4310-0801-4880-b615-2600ce4874f7"
+      },
+      "schedule": {
+        "date": "2026-10-31",
+        "time": "09:00",
+        "court": "1"
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 12
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_c2067727-b2e8-4536-91c8-4fdddbd2574e",
+      "createdAt": "2026-10-31T05:03:00.736Z",
+      "updatedAt": "2026-10-31T13:03:07.768Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_5cd1a2fb-3588-4e8a-a50b-064a8054fefc",
+      "round": 2,
+      "order": 5,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d033f78c-cc1b-451e-8389-e72144ea45ee"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_a8af4310-0801-4880-b615-2600ce4874f7"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 8
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_c5c238fd-1eec-4cce-8253-7f76275ce526",
+      "createdAt": "2026-10-31T05:03:00.737Z",
+      "updatedAt": "2026-10-31T13:21:50.591Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_5cd1a2fb-3588-4e8a-a50b-064a8054fefc",
+      "round": 3,
+      "order": 6,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d033f78c-cc1b-451e-8389-e72144ea45ee"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_335444b4-abe4-4104-91fc-cf264553caea"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 17
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_e80a399f-6b47-4423-b87f-41e440425114",
+      "createdAt": "2026-10-31T05:03:00.739Z",
+      "updatedAt": "2026-10-31T13:42:05.132Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_7221e7ba-3784-400b-af28-50fb7ed7ac53",
+      "round": 1,
+      "order": 7,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_59129494-d339-423b-8ec2-c4392adc1ce5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_d19a5444-96ef-4ed6-9ffb-5a25b869b3da"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 17,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_d9841fc3-b25b-4eba-a428-ce1d3cbf6642",
+      "createdAt": "2026-10-31T05:03:00.740Z",
+      "updatedAt": "2026-10-31T13:57:44.650Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_7221e7ba-3784-400b-af28-50fb7ed7ac53",
+      "round": 2,
+      "order": 8,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_2be3af4f-a738-4674-a380-8061c7426123"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_d19a5444-96ef-4ed6-9ffb-5a25b869b3da"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 14,
+          "b": 16
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_30cd5419-35dc-4da6-a504-3cd7bc05d63e",
+      "createdAt": "2026-10-31T05:03:00.742Z",
+      "updatedAt": "2026-10-31T14:07:45.124Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_484ec370-bb06-4767-bae2-82ab83de5853",
+      "groupId": "grp_7221e7ba-3784-400b-af28-50fb7ed7ac53",
+      "round": 3,
+      "order": 9,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_2be3af4f-a738-4674-a380-8061c7426123"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_59129494-d339-423b-8ec2-c4392adc1ce5"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 2,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_cb1252f6-7cb4-4714-9b98-86bb27b0c643",
+      "createdAt": "2026-10-31T14:28:01.143Z",
+      "updatedAt": "2026-10-31T14:29:17.776Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_884162d4-b33f-44a4-adff-bfb161eef766"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_a8af4310-0801-4880-b615-2600ce4874f7"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 1
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_1c63b422-dafa-4135-b2df-c1f613c37ae6",
+      "createdAt": "2026-10-31T14:28:01.145Z",
+      "updatedAt": "2026-10-31T14:48:06.545Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 1,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_09b40551-763c-4a3c-a20e-ef44881509c5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0b75c3bc-a55c-4849-8001-639c8e6247f1"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 18
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_2185c2ec-83a0-4ba1-bfd6-1d938910c817",
+      "createdAt": "2026-10-31T14:28:01.148Z",
+      "updatedAt": "2026-10-31T15:06:47.768Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 1,
+      "order": 3,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d19a5444-96ef-4ed6-9ffb-5a25b869b3da"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_335444b4-abe4-4104-91fc-cf264553caea"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 18
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_6769a788-3b43-49c3-bf04-4c3a0f619ac2",
+      "createdAt": "2026-10-31T14:28:01.150Z",
+      "updatedAt": "2026-10-31T15:29:35.409Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 1,
+      "order": 4,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d033f78c-cc1b-451e-8389-e72144ea45ee"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_59129494-d339-423b-8ec2-c4392adc1ce5"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 18
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_86087dfd-ab2f-41ab-9598-df8a01b71f64",
+      "createdAt": "2026-10-31T14:28:01.152Z",
+      "updatedAt": "2026-10-31T16:06:44.726Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 2,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_884162d4-b33f-44a4-adff-bfb161eef766"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_59129494-d339-423b-8ec2-c4392adc1ce5"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_a4bce09a-a6c4-4205-90f4-aaf37457bac1",
+      "createdAt": "2026-10-31T14:28:01.153Z",
+      "updatedAt": "2026-10-31T15:50:58.437Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 2,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_0b75c3bc-a55c-4849-8001-639c8e6247f1"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_335444b4-abe4-4104-91fc-cf264553caea"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 18
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_9ca0814d-023d-46c0-9a14-0ce13edfa342",
+      "createdAt": "2026-10-31T14:28:01.154Z",
+      "updatedAt": "2026-10-31T16:54:45.099Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_dc6bd6fc-6a05-43e1-b548-5c4ba1cd1f4f",
+      "groupId": null,
+      "round": 3,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_884162d4-b33f-44a4-adff-bfb161eef766"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_335444b4-abe4-4104-91fc-cf264553caea"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 22,
+          "b": 20
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_9587ba01-884b-4e2e-9803-c72f67ae75a6",
+      "createdAt": "2026-10-31T14:28:01.156Z",
+      "updatedAt": "2026-10-31T16:28:02.721Z",
+      "revision": 5,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "phaseId": "ph_7bbc1253-9767-4cbc-b163-2f53c0807646",
+      "groupId": null,
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_59129494-d339-423b-8ec2-c4392adc1ce5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0b75c3bc-a55c-4849-8001-639c8e6247f1"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 10
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_d1ac153d-9bba-465d-b817-18bee8dc5826",
+      "createdAt": "2026-10-31T05:05:38.641Z",
+      "updatedAt": "2026-10-31T05:20:21.676Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_146f71b7-a448-47fc-ae02-6da05f50f266",
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_8a8cb54e-eee1-435a-a3af-e17468457026"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_281b7741-da34-438b-9a89-093254978b82"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_f7f7e129-ceab-4668-9cce-6033088f6d44",
+      "createdAt": "2026-10-31T05:05:38.645Z",
+      "updatedAt": "2026-10-31T05:20:21.680Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_146f71b7-a448-47fc-ae02-6da05f50f266",
+      "round": 2,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_ff4c4159-703b-4b99-9fee-e745666d268c"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_281b7741-da34-438b-9a89-093254978b82"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_1ce166ab-a139-4212-aebd-039d86939e6e",
+      "createdAt": "2026-10-31T05:05:38.647Z",
+      "updatedAt": "2026-10-31T05:20:21.682Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_146f71b7-a448-47fc-ae02-6da05f50f266",
+      "round": 3,
+      "order": 3,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_ff4c4159-703b-4b99-9fee-e745666d268c"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_8a8cb54e-eee1-435a-a3af-e17468457026"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_53384f9d-50d7-466e-a954-9634de524f5b",
+      "createdAt": "2026-10-31T05:05:38.650Z",
+      "updatedAt": "2026-10-31T05:20:21.684Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_39c5ee47-6e90-481d-895f-d84768e72909",
+      "round": 1,
+      "order": 4,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d2d1342b-6c1d-4d1a-a08b-fc8f7f0c75bd"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_fca2f4e7-6861-4e21-bfe5-ae0d9b086b37"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_24cfe224-c867-41b1-b14e-0b9c6c3bdac0",
+      "createdAt": "2026-10-31T05:05:38.651Z",
+      "updatedAt": "2026-10-31T05:20:21.685Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_39c5ee47-6e90-481d-895f-d84768e72909",
+      "round": 2,
+      "order": 5,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_8db6dcb8-245f-4c5d-b988-4a9827eccd8b"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_fca2f4e7-6861-4e21-bfe5-ae0d9b086b37"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_eb4bea22-7e0b-45e0-97da-bb9524baa99a",
+      "createdAt": "2026-10-31T05:05:38.653Z",
+      "updatedAt": "2026-10-31T05:20:21.687Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_39c5ee47-6e90-481d-895f-d84768e72909",
+      "round": 3,
+      "order": 6,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_8db6dcb8-245f-4c5d-b988-4a9827eccd8b"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_d2d1342b-6c1d-4d1a-a08b-fc8f7f0c75bd"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_dfd39922-c526-4b09-802e-a965bee584cb",
+      "createdAt": "2026-10-31T05:05:38.655Z",
+      "updatedAt": "2026-10-31T05:20:21.689Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_af000c5b-f80a-4ee8-ad85-25a908a045a7",
+      "round": 1,
+      "order": 7,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_8f4b5b23-c96f-435d-a98a-8ad8f9e34542"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_5792e9e0-3458-48db-bad4-2fbd31a52d75"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_fb6a7d3a-7c75-45f6-94d9-b08ef52ff388",
+      "createdAt": "2026-10-31T05:05:38.657Z",
+      "updatedAt": "2026-10-31T05:20:21.691Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_af000c5b-f80a-4ee8-ad85-25a908a045a7",
+      "round": 2,
+      "order": 8,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_f91d9b5d-01da-423f-91d9-f8d37bb98e06"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_5792e9e0-3458-48db-bad4-2fbd31a52d75"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_3b0bbf94-4041-4be6-8693-e7cfafb67e0d",
+      "createdAt": "2026-10-31T05:05:38.658Z",
+      "updatedAt": "2026-10-31T05:20:21.694Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_af000c5b-f80a-4ee8-ad85-25a908a045a7",
+      "round": 3,
+      "order": 9,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_f91d9b5d-01da-423f-91d9-f8d37bb98e06"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_8f4b5b23-c96f-435d-a98a-8ad8f9e34542"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_810aba09-75c8-4ff3-9002-0f04834911eb",
+      "createdAt": "2026-10-31T05:05:38.660Z",
+      "updatedAt": "2026-10-31T05:20:21.696Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_f4667c3b-db52-445a-926e-7d3342bdb7a5",
+      "round": 1,
+      "order": 10,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_5571c14b-a444-42cb-9013-439795445970"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_852ab31c-0269-43db-911f-b3a4df0294d6"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_c2524755-013d-4c3f-8515-919fb39877df",
+      "createdAt": "2026-10-31T05:05:38.661Z",
+      "updatedAt": "2026-10-31T05:20:21.699Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_f4667c3b-db52-445a-926e-7d3342bdb7a5",
+      "round": 1,
+      "order": 11,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_0b0c43e7-f342-4624-8dce-d2cc3229429d"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_eb8a2459-ebf5-42ea-ab6b-04f33b2a534c"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_f0e7ac86-d7c6-4276-88e8-47fa8bf00cfe",
+      "createdAt": "2026-10-31T05:05:38.662Z",
+      "updatedAt": "2026-10-31T05:20:21.702Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_f4667c3b-db52-445a-926e-7d3342bdb7a5",
+      "round": 2,
+      "order": 12,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_5571c14b-a444-42cb-9013-439795445970"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_eb8a2459-ebf5-42ea-ab6b-04f33b2a534c"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_d771fc94-3f94-433a-a863-ac45ff46ad83",
+      "createdAt": "2026-10-31T05:05:38.663Z",
+      "updatedAt": "2026-10-31T05:20:21.704Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_f4667c3b-db52-445a-926e-7d3342bdb7a5",
+      "round": 2,
+      "order": 13,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_852ab31c-0269-43db-911f-b3a4df0294d6"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0b0c43e7-f342-4624-8dce-d2cc3229429d"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_94a51b18-a6b7-4a98-af23-16d7cfc3f719",
+      "createdAt": "2026-10-31T05:05:38.664Z",
+      "updatedAt": "2026-10-31T05:20:21.705Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_f4667c3b-db52-445a-926e-7d3342bdb7a5",
+      "round": 3,
+      "order": 14,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_5571c14b-a444-42cb-9013-439795445970"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0b0c43e7-f342-4624-8dce-d2cc3229429d"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_6ac48acb-b8ba-4534-b118-eead55ec65e9",
+      "createdAt": "2026-10-31T05:05:38.665Z",
+      "updatedAt": "2026-10-31T05:20:21.707Z",
+      "revision": 3,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "phaseId": "ph_d191e9f9-bd0c-41b7-8a21-3fa0ecf9a65f",
+      "groupId": "grp_f4667c3b-db52-445a-926e-7d3342bdb7a5",
+      "round": 3,
+      "order": 15,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_eb8a2459-ebf5-42ea-ab6b-04f33b2a534c"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_852ab31c-0269-43db-911f-b3a4df0294d6"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "aguardando",
+      "sets": [],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_67ac0544-c0ee-487e-9e82-15723dfbc646",
+      "createdAt": "2026-10-31T16:17:51.919Z",
+      "updatedAt": "2026-10-31T18:03:31.392Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c2dffd41-acdd-4daa-9876-1feef8d55626",
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_0ccfee66-942b-468c-bde9-db5700f091d8"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_05b7adf3-e527-4464-9a2a-a7c229fc6bf7"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 12
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_2b27c81c-c036-44a5-b6bb-612244a1c749",
+      "createdAt": "2026-10-31T16:17:51.920Z",
+      "updatedAt": "2026-10-31T18:16:48.303Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c2dffd41-acdd-4daa-9876-1feef8d55626",
+      "round": 1,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_896115f3-967d-43af-9ed0-38e7715af9e5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_ae3ced7a-9802-405e-9a67-53b5c133acd2"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 9
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_6c4e882f-f825-4acc-8aab-03c92e7ffaea",
+      "createdAt": "2026-10-31T16:17:51.921Z",
+      "updatedAt": "2026-10-31T18:31:09.741Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c2dffd41-acdd-4daa-9876-1feef8d55626",
+      "round": 2,
+      "order": 3,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_0ccfee66-942b-468c-bde9-db5700f091d8"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_ae3ced7a-9802-405e-9a67-53b5c133acd2"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 16,
+          "b": 14
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_dd86f60e-417a-4ca0-94e3-fa92da78ab69",
+      "createdAt": "2026-10-31T16:17:51.922Z",
+      "updatedAt": "2026-10-31T18:45:38.290Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c2dffd41-acdd-4daa-9876-1feef8d55626",
+      "round": 2,
+      "order": 4,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_05b7adf3-e527-4464-9a2a-a7c229fc6bf7"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_896115f3-967d-43af-9ed0-38e7715af9e5"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 12,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_edc0bfd4-69ca-48b2-a176-162a58c331f8",
+      "createdAt": "2026-10-31T16:17:51.923Z",
+      "updatedAt": "2026-10-31T18:59:07.093Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c2dffd41-acdd-4daa-9876-1feef8d55626",
+      "round": 3,
+      "order": 5,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_0ccfee66-942b-468c-bde9-db5700f091d8"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_896115f3-967d-43af-9ed0-38e7715af9e5"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 7,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_877d9493-4442-414e-ad79-b71cbc64b458",
+      "createdAt": "2026-10-31T16:17:51.924Z",
+      "updatedAt": "2026-10-31T19:09:04.947Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c2dffd41-acdd-4daa-9876-1feef8d55626",
+      "round": 3,
+      "order": 6,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_ae3ced7a-9802-405e-9a67-53b5c133acd2"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_05b7adf3-e527-4464-9a2a-a7c229fc6bf7"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 9
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_d4cefcd6-dace-4221-a601-9488a068efab",
+      "createdAt": "2026-10-31T16:17:51.926Z",
+      "updatedAt": "2026-10-31T18:02:47.935Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c688427a-6d32-4aea-8429-233359d9ec58",
+      "round": 1,
+      "order": 7,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d18b8231-e656-4111-adb3-813e56edd837"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_c8b6386e-1c30-4e0e-9a67-fa771026e87c"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 13,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_ecbdeeec-9264-4659-9672-9260cf52ca46",
+      "createdAt": "2026-10-31T16:17:51.927Z",
+      "updatedAt": "2026-10-31T18:18:20.309Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c688427a-6d32-4aea-8429-233359d9ec58",
+      "round": 1,
+      "order": 8,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_a5dc6ea1-c837-42a1-849b-7e9b9efad14f"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_67058bae-f189-46a6-82d2-de59a7fb1afe"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 7
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_6a60de23-563f-47d7-9a2f-de7525d089a9",
+      "createdAt": "2026-10-31T16:17:51.929Z",
+      "updatedAt": "2026-10-31T18:46:23.843Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c688427a-6d32-4aea-8429-233359d9ec58",
+      "round": 2,
+      "order": 10,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_c8b6386e-1c30-4e0e-9a67-fa771026e87c"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_a5dc6ea1-c837-42a1-849b-7e9b9efad14f"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_c6609e34-ee48-4928-9e71-69de24494986",
+      "createdAt": "2026-10-31T16:17:51.929Z",
+      "updatedAt": "2026-10-31T18:31:39.397Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c688427a-6d32-4aea-8429-233359d9ec58",
+      "round": 2,
+      "order": 9,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d18b8231-e656-4111-adb3-813e56edd837"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_67058bae-f189-46a6-82d2-de59a7fb1afe"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 10
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_a21fc56a-8c46-4cf2-9dbb-5db6a3103276",
+      "createdAt": "2026-10-31T16:17:51.930Z",
+      "updatedAt": "2026-10-31T19:01:37.248Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c688427a-6d32-4aea-8429-233359d9ec58",
+      "round": 3,
+      "order": 11,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_d18b8231-e656-4111-adb3-813e56edd837"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_a5dc6ea1-c837-42a1-849b-7e9b9efad14f"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 9
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_89a6e30a-7a2e-4a03-9706-f68d57038b84",
+      "createdAt": "2026-10-31T16:17:51.931Z",
+      "updatedAt": "2026-10-31T19:16:13.859Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_c688427a-6d32-4aea-8429-233359d9ec58",
+      "round": 3,
+      "order": 12,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_67058bae-f189-46a6-82d2-de59a7fb1afe"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_c8b6386e-1c30-4e0e-9a67-fa771026e87c"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 14,
+          "b": 16
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_5aabb3a6-02ba-45ea-8acc-4f7a7379355f",
+      "createdAt": "2026-10-31T16:17:51.932Z",
+      "updatedAt": "2026-10-31T19:35:03.281Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_7e5b7e65-eb88-4c61-969b-fa132a157450",
+      "round": 1,
+      "order": 13,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_7fabe168-f379-4f67-9a1c-9f092cae9489"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_ef8c26e1-b734-4b34-94d0-85919e32396b"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 6,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_0eac51f7-379f-47d3-a900-1f3f5e0c5311",
+      "createdAt": "2026-10-31T16:17:51.933Z",
+      "updatedAt": "2026-10-31T19:53:00.488Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_7e5b7e65-eb88-4c61-969b-fa132a157450",
+      "round": 1,
+      "order": 14,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_44693ccd-67de-45e6-864b-04c1f6447a79"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_c1e33e13-34e8-4f8a-b640-f91d6abf4d29"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_a5e17228-221f-47b6-8fed-844037fd81ae",
+      "createdAt": "2026-10-31T16:17:51.934Z",
+      "updatedAt": "2026-10-31T20:08:34.673Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_7e5b7e65-eb88-4c61-969b-fa132a157450",
+      "round": 2,
+      "order": 15,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_7fabe168-f379-4f67-9a1c-9f092cae9489"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_c1e33e13-34e8-4f8a-b640-f91d6abf4d29"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_38634d42-0f59-4fd5-8f52-c2aac97fecaf",
+      "createdAt": "2026-10-31T16:17:51.935Z",
+      "updatedAt": "2026-10-31T20:23:37.983Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_7e5b7e65-eb88-4c61-969b-fa132a157450",
+      "round": 2,
+      "order": 16,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_ef8c26e1-b734-4b34-94d0-85919e32396b"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_44693ccd-67de-45e6-864b-04c1f6447a79"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 12
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_6957161e-ad1e-45fd-a64f-7be97dc81cb4",
+      "createdAt": "2026-10-31T16:17:51.937Z",
+      "updatedAt": "2026-10-31T20:42:03.501Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_7e5b7e65-eb88-4c61-969b-fa132a157450",
+      "round": 3,
+      "order": 17,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_7fabe168-f379-4f67-9a1c-9f092cae9489"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_44693ccd-67de-45e6-864b-04c1f6447a79"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_527b1bde-a5d1-43a8-9f61-fb3434cfa71e",
+      "createdAt": "2026-10-31T16:17:51.938Z",
+      "updatedAt": "2026-10-31T20:37:10.514Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_7e5b7e65-eb88-4c61-969b-fa132a157450",
+      "round": 3,
+      "order": 18,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_c1e33e13-34e8-4f8a-b640-f91d6abf4d29"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_ef8c26e1-b734-4b34-94d0-85919e32396b"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_13673ed7-3f1d-4b8b-a3b4-15ae5e1cd960",
+      "createdAt": "2026-10-31T16:17:51.939Z",
+      "updatedAt": "2026-10-31T19:24:42.536Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_9de0cef7-0a64-4e29-a1f9-52f9cf4cbec9",
+      "round": 1,
+      "order": 19,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_17c0b054-ff54-4200-b5eb-22b09b574e6d"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_cc465c86-164a-469f-b2d2-d06e862ef9f4"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 12,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_c6e372d8-276f-47d0-82f3-00256d91a96d",
+      "createdAt": "2026-10-31T16:17:51.940Z",
+      "updatedAt": "2026-10-31T19:38:20.859Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_9de0cef7-0a64-4e29-a1f9-52f9cf4cbec9",
+      "round": 1,
+      "order": 20,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_cb019fee-046a-4f5a-8dc5-1a3343c61c50"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_9ed99a31-de04-4a21-aa56-e3ab78922afa"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 14,
+          "b": 16
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_7ae63391-7b6c-4618-a952-9c718a96f15c",
+      "createdAt": "2026-10-31T16:17:51.941Z",
+      "updatedAt": "2026-10-31T19:50:46.463Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_9de0cef7-0a64-4e29-a1f9-52f9cf4cbec9",
+      "round": 2,
+      "order": 21,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_17c0b054-ff54-4200-b5eb-22b09b574e6d"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_9ed99a31-de04-4a21-aa56-e3ab78922afa"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 10,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_5dc06544-4f19-428f-950f-04720cdfd7cd",
+      "createdAt": "2026-10-31T16:17:51.942Z",
+      "updatedAt": "2026-10-31T19:58:46.827Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_9de0cef7-0a64-4e29-a1f9-52f9cf4cbec9",
+      "round": 2,
+      "order": 22,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_cc465c86-164a-469f-b2d2-d06e862ef9f4"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_cb019fee-046a-4f5a-8dc5-1a3343c61c50"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 7,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_2d9a414e-f808-4197-a9c8-5baabeffade2",
+      "createdAt": "2026-10-31T16:17:51.943Z",
+      "updatedAt": "2026-10-31T20:09:24.448Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_9de0cef7-0a64-4e29-a1f9-52f9cf4cbec9",
+      "round": 3,
+      "order": 23,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_17c0b054-ff54-4200-b5eb-22b09b574e6d"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_cb019fee-046a-4f5a-8dc5-1a3343c61c50"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 5,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_b9470d4c-7210-4a3d-8c48-5761069d6401",
+      "createdAt": "2026-10-31T16:17:51.944Z",
+      "updatedAt": "2026-10-31T20:22:05.488Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_f63d539e-3838-4d2c-baaf-55c343cfcbee",
+      "groupId": "grp_9de0cef7-0a64-4e29-a1f9-52f9cf4cbec9",
+      "round": 3,
+      "order": 24,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_9ed99a31-de04-4a21-aa56-e3ab78922afa"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_cc465c86-164a-469f-b2d2-d06e862ef9f4"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 11,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_a0842ebb-e637-4005-9599-f9131a1457ac",
+      "createdAt": "2026-10-31T20:43:00.434Z",
+      "updatedAt": "2026-10-31T20:55:29.306Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_896115f3-967d-43af-9ed0-38e7715af9e5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_9ed99a31-de04-4a21-aa56-e3ab78922afa"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 9
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_51ed007f-1ae2-49e7-aec9-8c2e72ad32fb",
+      "createdAt": "2026-10-31T20:43:00.436Z",
+      "updatedAt": "2026-10-31T21:01:08.488Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 1,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_cb019fee-046a-4f5a-8dc5-1a3343c61c50"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0ccfee66-942b-468c-bde9-db5700f091d8"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 12,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_dee0d763-2e68-4bd0-80ab-1701a0ab7a8d",
+      "createdAt": "2026-10-31T20:43:00.438Z",
+      "updatedAt": "2026-10-31T21:09:22.067Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 1,
+      "order": 3,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_c8b6386e-1c30-4e0e-9a67-fa771026e87c"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_7fabe168-f379-4f67-9a1c-9f092cae9489"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 13,
+          "b": 15
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_31fe137f-d9b3-4be8-a839-c8a3aa39f62f",
+      "createdAt": "2026-10-31T20:43:00.440Z",
+      "updatedAt": "2026-10-31T21:13:44.206Z",
+      "revision": 3,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 1,
+      "order": 4,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_ef8c26e1-b734-4b34-94d0-85919e32396b"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_d18b8231-e656-4111-adb3-813e56edd837"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 11
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_26164233-09a3-4587-a1ce-adff0fab7bfd",
+      "createdAt": "2026-10-31T20:43:00.442Z",
+      "updatedAt": "2026-10-31T21:50:20.586Z",
+      "revision": 5,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 2,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_896115f3-967d-43af-9ed0-38e7715af9e5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_ef8c26e1-b734-4b34-94d0-85919e32396b"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 20,
+          "b": 22
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_e36871ac-8ccb-483f-a3e1-71b9e6632cd3",
+      "createdAt": "2026-10-31T20:43:00.444Z",
+      "updatedAt": "2026-10-31T21:32:54.372Z",
+      "revision": 5,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 2,
+      "order": 2,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_0ccfee66-942b-468c-bde9-db5700f091d8"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_7fabe168-f379-4f67-9a1c-9f092cae9489"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 13
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_064dd533-73ab-4483-a89c-5d16d3f37a0f",
+      "createdAt": "2026-10-31T20:43:00.445Z",
+      "updatedAt": "2026-10-31T22:26:56.638Z",
+      "revision": 5,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_975ddc94-d4e5-489f-9b9f-ecf0b3f6d8e0",
+      "groupId": null,
+      "round": 3,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_ef8c26e1-b734-4b34-94d0-85919e32396b"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_0ccfee66-942b-468c-bde9-db5700f091d8"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 14,
+          "b": 21
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    },
+    {
+      "id": "mch_f3ae9cb2-a62b-44ac-9fcb-623c7628b90d",
+      "createdAt": "2026-10-31T20:43:00.448Z",
+      "updatedAt": "2026-10-31T22:11:16.834Z",
+      "revision": 5,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "phaseId": "ph_ae943ef8-619a-4828-8461-6cfda74166e9",
+      "groupId": null,
+      "round": 1,
+      "order": 1,
+      "slotA": {
+        "type": "team",
+        "teamId": "team_896115f3-967d-43af-9ed0-38e7715af9e5"
+      },
+      "slotB": {
+        "type": "team",
+        "teamId": "team_7fabe168-f379-4f67-9a1c-9f092cae9489"
+      },
+      "schedule": {
+        "date": null,
+        "time": null,
+        "court": null
+      },
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 15,
+          "b": 10
+        }
+      ],
+      "resultType": "normal",
+      "resultDetail": null
+    }
+  ],
+  "teams": [
+    {
+      "id": "team_884162d4-b33f-44a4-adff-bfb161eef766",
+      "createdAt": "2026-10-31T04:57:35.694Z",
+      "updatedAt": "2026-10-31T04:57:35.694Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "NILZA E FRANÇA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_09b40551-763c-4a3c-a20e-ef44881509c5",
+      "createdAt": "2026-10-31T04:57:44.354Z",
+      "updatedAt": "2026-10-31T04:57:44.354Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "MARIA E BEATRIZ",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_0b75c3bc-a55c-4849-8001-639c8e6247f1",
+      "createdAt": "2026-10-31T04:57:54.235Z",
+      "updatedAt": "2026-10-31T04:57:54.235Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "EVY E NADIA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_d033f78c-cc1b-451e-8389-e72144ea45ee",
+      "createdAt": "2026-10-31T04:58:04.821Z",
+      "updatedAt": "2026-10-31T04:58:04.821Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "RAYANE E MAYANE",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_335444b4-abe4-4104-91fc-cf264553caea",
+      "createdAt": "2026-10-31T04:58:13.820Z",
+      "updatedAt": "2026-10-31T04:58:13.820Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "SAFIRA E JESSICA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_a8af4310-0801-4880-b615-2600ce4874f7",
+      "createdAt": "2026-10-31T04:58:20.643Z",
+      "updatedAt": "2026-10-31T04:58:20.643Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "CAROL E MELISSA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_2be3af4f-a738-4674-a380-8061c7426123",
+      "createdAt": "2026-10-31T04:58:34.324Z",
+      "updatedAt": "2026-10-31T04:58:34.324Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "JHAYNARA E LUDMILLA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_59129494-d339-423b-8ec2-c4392adc1ce5",
+      "createdAt": "2026-10-31T04:58:44.404Z",
+      "updatedAt": "2026-10-31T04:58:44.404Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "LUDMILLA E GABY",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_d19a5444-96ef-4ed6-9ffb-5a25b869b3da",
+      "createdAt": "2026-10-31T04:58:54.148Z",
+      "updatedAt": "2026-10-31T04:58:54.148Z",
+      "revision": 1,
+      "categoryId": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
+      "name": "ELISSANDRA E AFRA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_ff4c4159-703b-4b99-9fee-e745666d268c",
+      "createdAt": "2026-10-31T04:59:12.546Z",
+      "updatedAt": "2026-10-31T04:59:12.546Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "ENDRYSON E JHEYRON",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_8a8cb54e-eee1-435a-a3af-e17468457026",
+      "createdAt": "2026-10-31T04:59:20.945Z",
+      "updatedAt": "2026-10-31T04:59:20.945Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "ULISSES E THIAGO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_281b7741-da34-438b-9a89-093254978b82",
+      "createdAt": "2026-10-31T04:59:30.281Z",
+      "updatedAt": "2026-10-31T04:59:30.281Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "KARLINHOS E ITALO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_8db6dcb8-245f-4c5d-b988-4a9827eccd8b",
+      "createdAt": "2026-10-31T04:59:40.879Z",
+      "updatedAt": "2026-10-31T04:59:40.879Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "ANTONIO E VITOR",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_d2d1342b-6c1d-4d1a-a08b-fc8f7f0c75bd",
+      "createdAt": "2026-10-31T04:59:48.557Z",
+      "updatedAt": "2026-10-31T04:59:48.557Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "RODRIGO E JOÃO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_fca2f4e7-6861-4e21-bfe5-ae0d9b086b37",
+      "createdAt": "2026-10-31T04:59:56.302Z",
+      "updatedAt": "2026-10-31T04:59:56.302Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "LUKKI E RICARDO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_5571c14b-a444-42cb-9013-439795445970",
+      "createdAt": "2026-10-31T05:00:06.234Z",
+      "updatedAt": "2026-10-31T05:00:06.234Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "CAIO E JOÃO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_0b0c43e7-f342-4624-8dce-d2cc3229429d",
+      "createdAt": "2026-10-31T05:00:19.873Z",
+      "updatedAt": "2026-10-31T05:00:19.873Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "CAUÃ E KAWA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_eb8a2459-ebf5-42ea-ab6b-04f33b2a534c",
+      "createdAt": "2026-10-31T05:00:28.249Z",
+      "updatedAt": "2026-10-31T05:00:28.249Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "FLASH E JUNIOR",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_852ab31c-0269-43db-911f-b3a4df0294d6",
+      "createdAt": "2026-10-31T05:00:41.024Z",
+      "updatedAt": "2026-10-31T05:00:41.024Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "JULIO E EVILAN",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_f91d9b5d-01da-423f-91d9-f8d37bb98e06",
+      "createdAt": "2026-10-31T05:00:50.091Z",
+      "updatedAt": "2026-10-31T05:00:50.091Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "FERNANDO E JOÃO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_8f4b5b23-c96f-435d-a98a-8ad8f9e34542",
+      "createdAt": "2026-10-31T05:00:58.402Z",
+      "updatedAt": "2026-10-31T05:00:58.402Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "DAVI E FELIPE",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_5792e9e0-3458-48db-bad4-2fbd31a52d75",
+      "createdAt": "2026-10-31T05:01:03.879Z",
+      "updatedAt": "2026-10-31T05:01:03.879Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "MARCOS E LEO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_b4951929-43d1-4c29-afe3-35385c8bdd0b",
+      "createdAt": "2026-10-31T16:05:53.235Z",
+      "updatedAt": "2026-10-31T16:05:53.235Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "ALEPHY E PIETRO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_082c2959-6392-49cf-aa85-4207ec0df5c7",
+      "createdAt": "2026-10-31T16:06:11.296Z",
+      "updatedAt": "2026-10-31T16:06:11.296Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "WANDRESEN E ROMARIO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_25277d6e-f865-4d3b-b6e4-33ed8ee0b617",
+      "createdAt": "2026-10-31T16:09:25.159Z",
+      "updatedAt": "2026-10-31T16:09:25.159Z",
+      "revision": 1,
+      "categoryId": "cat_eb75c3ef-13c8-4d95-bf68-7ce2df525de6",
+      "name": "JHONSON E GAB",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_0ccfee66-942b-468c-bde9-db5700f091d8",
+      "createdAt": "2026-10-31T16:10:28.247Z",
+      "updatedAt": "2026-10-31T16:10:28.247Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "ENDRYSON E JHEYRON",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_896115f3-967d-43af-9ed0-38e7715af9e5",
+      "createdAt": "2026-10-31T16:10:36.775Z",
+      "updatedAt": "2026-10-31T16:10:36.775Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "ULISSES E THIAGO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_ae3ced7a-9802-405e-9a67-53b5c133acd2",
+      "createdAt": "2026-10-31T16:10:44.984Z",
+      "updatedAt": "2026-10-31T16:10:44.984Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "KARLINHOS E ITALO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_d18b8231-e656-4111-adb3-813e56edd837",
+      "createdAt": "2026-10-31T16:10:57.654Z",
+      "updatedAt": "2026-10-31T16:10:57.654Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "ANTONIO E VITOR",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_a5dc6ea1-c837-42a1-849b-7e9b9efad14f",
+      "createdAt": "2026-10-31T16:11:07.550Z",
+      "updatedAt": "2026-10-31T16:11:07.550Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "RODRIGO E JOÃO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_67058bae-f189-46a6-82d2-de59a7fb1afe",
+      "createdAt": "2026-10-31T16:11:21.984Z",
+      "updatedAt": "2026-10-31T16:11:21.984Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "LUKKI E RICARDO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_17c0b054-ff54-4200-b5eb-22b09b574e6d",
+      "createdAt": "2026-10-31T16:11:34.286Z",
+      "updatedAt": "2026-10-31T16:11:34.286Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "CAIO E JOÃO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_cb019fee-046a-4f5a-8dc5-1a3343c61c50",
+      "createdAt": "2026-10-31T16:11:41.990Z",
+      "updatedAt": "2026-10-31T16:11:41.990Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "CAUÃ E KAWA",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_9ed99a31-de04-4a21-aa56-e3ab78922afa",
+      "createdAt": "2026-10-31T16:11:48.836Z",
+      "updatedAt": "2026-10-31T16:11:48.836Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "FLASH E JUNIOR",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_cc465c86-164a-469f-b2d2-d06e862ef9f4",
+      "createdAt": "2026-10-31T16:11:55.027Z",
+      "updatedAt": "2026-10-31T16:11:55.027Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "JULIO E EVILAN",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_7fabe168-f379-4f67-9a1c-9f092cae9489",
+      "createdAt": "2026-10-31T16:12:02.605Z",
+      "updatedAt": "2026-10-31T16:12:02.605Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "FERNANDO E JOÃO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_44693ccd-67de-45e6-864b-04c1f6447a79",
+      "createdAt": "2026-10-31T16:12:09.736Z",
+      "updatedAt": "2026-10-31T16:12:09.736Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "DAVI E FELIPE",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_c1e33e13-34e8-4f8a-b640-f91d6abf4d29",
+      "createdAt": "2026-10-31T16:12:17.013Z",
+      "updatedAt": "2026-10-31T16:12:17.013Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "MARCOS E LEO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_05b7adf3-e527-4464-9a2a-a7c229fc6bf7",
+      "createdAt": "2026-10-31T16:12:24.911Z",
+      "updatedAt": "2026-10-31T16:12:24.911Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "ALEPHY E PIETRO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_c8b6386e-1c30-4e0e-9a67-fa771026e87c",
+      "createdAt": "2026-10-31T16:12:31.174Z",
+      "updatedAt": "2026-10-31T16:12:31.174Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "WANDRESEN E ROMARIO",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    },
+    {
+      "id": "team_ef8c26e1-b734-4b34-94d0-85919e32396b",
+      "createdAt": "2026-10-31T16:12:38.195Z",
+      "updatedAt": "2026-10-31T16:12:38.195Z",
+      "revision": 1,
+      "categoryId": "cat_064403db-8820-4168-852e-6a9dcbcb7c3c",
+      "name": "JHONSON E GAB",
+      "seed": null,
+      "lockedGroup": null,
+      "athletes": []
+    }
+  ],
   "categories": [
     {
       "id": "cat_93ad4168-5bd3-433d-a658-e8c4c5cce4ae",
@@ -189,5 +2679,5 @@
       "status": "configuracao"
     }
   ],
-  "publishedAt": "2026-11-02T22:27:22.435Z"
+  "publishedAt": "2026-11-02T22:34:50.365Z"
 }
