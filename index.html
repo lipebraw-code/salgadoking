@@ -220,8 +220,9 @@ input:focus,select:focus{border-color:var(--primary)}
 .match-team-a{text-align:right;font-size:.88rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .match-team-b{text-align:left;font-size:.88rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .match-team-a.winner,.match-team-b.winner{font-weight:700;color:var(--success,#16a34a)}
-.match-score-block{text-align:center;flex-shrink:0}
-.match-score-sets{font-size:.8rem;font-weight:700;color:var(--muted);white-space:nowrap}
+.match-score-block{text-align:center;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:2px}
+.match-score-sets-big{font-size:.95rem;font-weight:700;color:var(--text);white-space:nowrap;line-height:1}
+.match-score-detail{font-size:.65rem;color:var(--muted);white-space:nowrap;letter-spacing:.02em}
 .match-vs{font-size:.8rem;color:var(--muted);font-weight:600;text-align:center}
 .match-side-col{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
 .match-status-pill{font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap}
@@ -2265,7 +2266,9 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
   VT.engines = VT.engines || {};
 
   var DEFAULT_CRITERIA = [
+    { key: 'points', scope: 'all' },
     { key: 'wins', scope: 'all' },
+    { key: 'setsDiff', scope: 'all' },
     { key: 'pointsDiff', scope: 'all' },
     { key: 'headToHead', scope: 'tiedOnly' },
     { key: 'pointsFor', scope: 'all' }
@@ -2298,8 +2301,22 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       stats[idB].setsWon += setsB;
       stats[idB].setsLost += setsA;
 
-      if (setsA > setsB) { stats[idA].wins++; stats[idB].losses++; }
-      else if (setsB > setsA) { stats[idB].wins++; stats[idA].losses++; }
+      if (setsA > setsB) {
+        stats[idA].wins++;
+        stats[idB].losses++;
+        // 3/2/1/0: vitória limpa (perdedor não ganhou nenhum set) = 3pts; vitória apertada = 2pts/1pt
+        var ptsWin = (setsB === 0) ? 3 : 2;
+        var ptsLoss = (setsB === 0) ? 0 : 1;
+        stats[idA].points += ptsWin;
+        stats[idB].points += ptsLoss;
+      } else if (setsB > setsA) {
+        stats[idB].wins++;
+        stats[idA].losses++;
+        var ptsWin2 = (setsA === 0) ? 3 : 2;
+        var ptsLoss2 = (setsA === 0) ? 0 : 1;
+        stats[idB].points += ptsWin2;
+        stats[idA].points += ptsLoss2;
+      }
     });
 
     Object.keys(stats).forEach(function (id) {
@@ -6125,8 +6142,18 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     else if (m.status === 'finalizado') cardClass += ' done';
     else if (m.status === 'cancelado') cardClass += ' cancelled';
 
-    // Sets text (only when finished)
-    var setsText = (m.status === 'finalizado' || m.status === 'andamento') ? fmtSets(m.sets) : null;
+    // Sets score: "2 × 1" big + "18-16  18-14" small
+    var setsScoreBlock = null;
+    if ((m.status === 'finalizado' || m.status === 'andamento') && m.sets && m.sets.length) {
+      var sA = 0, sB = 0;
+      m.sets.forEach(function (s) { if (s.a > s.b) sA++; else if (s.b > s.a) sB++; });
+      var setsBig = sA + ' × ' + sB;
+      var setsDetail = m.sets.map(function (s) { return s.a + '-' + s.b; }).join('  ');
+      setsScoreBlock = h('div', { class: 'match-score-block' },
+        h('span', { class: 'match-score-sets-big' }, setsBig),
+        h('span', { class: 'match-score-detail' }, setsDetail)
+      );
+    }
 
     // Footer: live bar, schedule chips, secondary actions
     var footerItems = [];
@@ -6165,7 +6192,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         h('div', { class: 'match-body' },
           h('div', { class: 'match-team-row' },
             h('div', { class: 'match-team-a' + (winnerSide === 'A' ? ' winner' : '') }, slotAName),
-            h('div', { class: 'match-score-block' }, setsText ? h('span', { class: 'match-score-sets' }, setsText) : h('span', { class: 'match-vs' }, '×')),
+            setsScoreBlock || h('div', { class: 'match-score-block' }, h('span', { class: 'match-vs' }, '×')),
             h('div', { class: 'match-team-b' + (winnerSide === 'B' ? ' winner' : '') }, slotBName)
           )
         ),
@@ -6533,6 +6560,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         h('thead', null, h('tr', null,
           h('th', null, '#'),
           h('th', null, 'Equipe'),
+          h('th', { class: 'num', title: 'Pontos (2-0: 3pts / 2-1: 2pts e 1pt)' }, 'Pts'),
           h('th', { class: 'num' }, 'J'),
           h('th', { class: 'num' }, 'V'),
           h('th', { class: 'num' }, 'D'),
@@ -6545,6 +6573,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           return h('tr', { class: (qualified ? 'qualified' : '') + (r.played === 0 ? ' no-matches' : ''), dataset: { teamId: r.teamId } },
             h('td', { class: 'rank' }, String(r.rank) + 'º'),
             h('td', { class: 'team-name' }, r.teamName),
+            h('td', { class: 'num wins', style: 'color:var(--primary,#16a34a)' }, String(r.points || 0)),
             h('td', { class: 'num' }, String(r.played)),
             h('td', { class: 'num wins' }, String(r.wins)),
             h('td', { class: 'num' }, String(r.losses)),
@@ -6562,6 +6591,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 
   function legendBlock() {
     return h('div', { class: 'standings-legend' },
+      h('span', null, h('strong', null, 'Pts'), ' Pontos (2-0=3 / 2-1=2/1)'),
       h('span', null, h('strong', null, 'J'), ' Jogos'),
       h('span', null, h('strong', null, 'V'), ' Vitórias'),
       h('span', null, h('strong', null, 'D'), ' Derrotas'),
