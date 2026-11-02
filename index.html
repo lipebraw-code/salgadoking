@@ -452,13 +452,13 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       inner = '<div class="msg info">⏳ O acesso a este torneio ainda não foi liberado.<br>Aguarde o organizador.</div>';
     } else if (status === 'expirado') {
       inner = '<div class="msg danger">🔒 O acesso a este torneio foi encerrado.</div>';
-    } else {
-      inner = [
-        '<input id="erp-pwd" type="password" placeholder="Digite a senha do torneio" autocomplete="off">',
-        '<button id="erp-btn">Acessar →</button>',
-        '<div class="err" id="erp-err"></div>'
-      ].join('');
     }
+    // campo de senha sempre visível (admin pode entrar mesmo com acesso encerrado)
+    inner += [
+      '<input id="erp-pwd" type="password" placeholder="Digite a senha" autocomplete="off">',
+      '<button id="erp-btn">Acessar →</button>',
+      '<div class="err" id="erp-err"></div>'
+    ].join('');
 
     var lock = document.createElement('div');
     lock.id = 'erp-lock';
