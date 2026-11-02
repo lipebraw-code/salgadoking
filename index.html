@@ -435,6 +435,12 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 .acesso-qr-wrap{text-align:center;margin-top:14px;padding:14px;background:#fff;border:1px solid var(--border);border-radius:8px;display:inline-block}
 .acesso-qr-wrap canvas,.acesso-qr-wrap svg{display:block;margin:0 auto}
 .acesso-qr-label{font-size:.75rem;color:var(--muted);margin-top:6px}
+.acesso-hint{font-size:.8rem;color:var(--muted);margin:0 0 10px}
+.btn-primary,.btn.btn-primary{background:var(--primary,#1f57d6);border-color:var(--primary,#1f57d6);color:#fff}
+.btn-primary:hover,.btn.btn-primary:hover{background:#1749b8}
+.btn-success,.btn.btn-success{background:#16a34a;border-color:#16a34a;color:#fff}
+.btn-success:hover,.btn.btn-success:hover{background:#15803d}
+.btn-sm,.btn.btn-sm{padding:5px 10px;font-size:.82rem}
 /* ===== Página /view (atleta) ===== */
 .view-page{max-width:500px;margin:0 auto;padding:12px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
 .view-header{text-align:center;padding:16px 0 10px;border-bottom:1px solid var(--border,#e5e7eb);margin-bottom:16px}
@@ -476,7 +482,10 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     inicio:       '2026-11-01 16:20',
     duracaoHoras: 20,
     torneio:      'ERP Vôlei — Torneio',
-    viewUrl:      ''
+    viewUrl:      '',
+    githubOwner:  '',
+    githubRepo:   '',
+    githubToken:  ''
   };
   function loadAccess() {
     try { var s = localStorage.getItem('erp_access_cfg'); if (s) { return Object.assign({}, ACCESS_DEFAULTS, JSON.parse(s)); } } catch(e){}
@@ -7917,7 +7926,10 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
     function save() {
       var updated = Object.assign({}, cfg);
       fields.forEach(function (f) { updated[f.key] = f.key === 'duracaoHoras' ? Number(inputs[f.key].value) : inputs[f.key].value.trim(); });
-      updated.viewUrl = inputs.viewUrl.value.trim();
+      updated.viewUrl      = inputs.viewUrl.value.trim();
+      updated.githubOwner  = inputs.githubOwner.value.trim();
+      updated.githubRepo   = inputs.githubRepo.value.trim();
+      updated.githubToken  = inputs.githubToken.value.trim();
       erpAccess.save(updated);
       // refresh status
       var newSt = statusInfo();
@@ -7926,6 +7938,61 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       renderQR(buildViewUrl(updated), qrWrap);
       alert('Configurações salvas!');
     }
+
+    function publishView() {
+      var owner = inputs.githubOwner.value.trim();
+      var repo  = inputs.githubRepo.value.trim();
+      var token = inputs.githubToken.value.trim();
+      if (!owner || !repo || !token) {
+        alert('Preencha Owner, Repo e Token do GitHub antes de publicar.');
+        return;
+      }
+      publishBtn.textContent = 'Publicando…';
+      publishBtn.disabled = true;
+
+      var store = ctx.store;
+      store.list('tournaments').then(function (tournaments) {
+        if (!tournaments || !tournaments.length) {
+          publishBtn.textContent = 'Publicar View'; publishBtn.disabled = false;
+          alert('Nenhum torneio encontrado no banco local.');
+          return;
+        }
+        var tournament = tournaments[tournaments.length - 1];
+        var tid = tournament.id;
+        return Promise.all([
+          store.list('matches').then(function (a) { return a.filter(function (m) { return m.tournamentId === tid; }); }),
+          store.list('teams').then(function (a)   { return a.filter(function (t) { return t.tournamentId === tid; }); }),
+          store.list('categories').then(function (a) { return a.filter(function (c) { return c.tournamentId === tid; }); })
+        ]).then(function (results) {
+          var data = { tournament: tournament, matches: results[0], teams: results[1], categories: results[2], publishedAt: new Date().toISOString() };
+          var json = JSON.stringify(data, null, 2);
+          var b64  = btoa(unescape(encodeURIComponent(json)));
+          var apiUrl = 'https://api.github.com/repos/' + owner + '/' + repo + '/contents/view-data.json';
+          var hdrs = { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' };
+          // pega SHA atual (necessário para atualizar)
+          return fetch(apiUrl, { headers: hdrs }).then(function (r) {
+            if (r.status === 200) return r.json().then(function (f) { return f.sha; });
+            return null;
+          }).then(function (sha) {
+            var body = { message: 'Publicar dados do torneio ' + new Date().toLocaleString('pt-BR'), content: b64 };
+            if (sha) body.sha = sha;
+            return fetch(apiUrl, { method: 'PUT', headers: hdrs, body: JSON.stringify(body) });
+          }).then(function (r) {
+            publishBtn.textContent = 'Publicar View'; publishBtn.disabled = false;
+            if (r.ok) {
+              alert('✅ Publicado!\nAguarde ~1 minuto para o GitHub Pages atualizar.\nAtletas que recarregarem a página verão os dados novos.');
+            } else {
+              r.json().then(function (e) { alert('Erro ao publicar: ' + (e.message || r.status)); });
+            }
+          });
+        });
+      }).catch(function (err) {
+        publishBtn.textContent = 'Publicar View'; publishBtn.disabled = false;
+        alert('Erro: ' + (err && err.message ? err.message : String(err)));
+      });
+    }
+
+    var publishBtn = h('button', { class: 'btn btn-success', onclick: publishView }, ['Publicar View']);
 
     var statusDiv = h('div', { class: 'acesso-status ' + st.code }, [st.label]);
 
@@ -7951,6 +8018,14 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       navigator.clipboard && navigator.clipboard.writeText(viewUrlInput.value).then(function () { copyBtn.textContent = 'Copiado!'; setTimeout(function () { copyBtn.textContent = 'Copiar'; }, 2000); });
     }}, ['Copiar']);
 
+    // campos GitHub
+    var ghOwnerInput = h('input', { type: 'text', value: cfg.githubOwner || '', placeholder: 'ex: lipebraw-code', class: '' });
+    var ghRepoInput  = h('input', { type: 'text', value: cfg.githubRepo  || '', placeholder: 'ex: salgadoking',  class: '' });
+    var ghTokenInput = h('input', { type: 'password', value: cfg.githubToken || '', placeholder: 'ghp_…', class: '', autocomplete: 'off' });
+    inputs.githubOwner = ghOwnerInput;
+    inputs.githubRepo  = ghRepoInput;
+    inputs.githubToken = ghTokenInput;
+
     function buildViewUrl(c) {
       if (!c.viewUrl) return '';
       var base = c.viewUrl.split('?')[0];
@@ -7974,6 +8049,14 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
         ]),
         qrWrap,
         h('p', { class: 'acesso-qr-label' }, ['Escaneie para acessar a visão do atleta'])
+      ]),
+      h('div', { class: 'acesso-section' }, [
+        h('h3', {}, ['Publicar dados para atletas (GitHub)']),
+        h('p', { class: 'acesso-hint' }, ['Preencha os campos abaixo e clique em "Publicar View" para enviar os dados do torneio ao GitHub. A página do atleta lerá esses dados automaticamente.']),
+        h('div', { class: 'acesso-field' }, [h('label', {}, ['GitHub Owner (usuário ou org)']), ghOwnerInput]),
+        h('div', { class: 'acesso-field' }, [h('label', {}, ['GitHub Repo (nome do repositório)']), ghRepoInput]),
+        h('div', { class: 'acesso-field' }, [h('label', {}, ['GitHub Token (classic, com permissão repo)']), ghTokenInput]),
+        publishBtn
       ]),
       h('button', { class: 'btn btn-primary', onclick: save }, ['Salvar configurações'])
     ]);
@@ -8053,75 +8136,89 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       refreshTimer = setTimeout(function () { load(); scheduleRefresh(); }, 300000);
     }
 
-    function load() {
+    function renderData(torneio, matches, teams, cats) {
+      var activeCat = 'all';
+
+      function filteredMatches() {
+        if (activeCat === 'all') return matches;
+        return matches.filter(function (m) { return m.categoryId === activeCat; });
+      }
+
+      function rebuild() {
+        var fm = filteredMatches();
+        var live     = fm.filter(isLive);
+        var sched    = fm.filter(isScheduled).sort(function (a, b) { return (a.scheduledTime || '').localeCompare(b.scheduledTime || ''); });
+        var finished = fm.filter(isFinished);
+
+        var catTabs = [h('button', { class: 'view-cat-tab' + (activeCat === 'all' ? ' active' : ''), onclick: function () { activeCat = 'all'; rebuild(); }}, ['Todos'])];
+        cats.forEach(function (c) {
+          catTabs.push(h('button', { class: 'view-cat-tab' + (activeCat === c.id ? ' active' : ''), onclick: function () { activeCat = c.id; rebuild(); }}, [c.name]));
+        });
+
+        var sections = [];
+        if (live.length) {
+          sections.push(h('p', { class: 'view-section-title' }, ['Ao vivo']));
+          live.forEach(function (m) { sections.push(renderMatchCard(m, teams, true)); });
+        }
+        if (sched.length) {
+          sections.push(h('p', { class: 'view-section-title' }, ['Próximos jogos']));
+          sched.slice(0, 10).forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
+        }
+        if (!live.length && !sched.length) {
+          if (finished.length) {
+            sections.push(h('p', { class: 'view-section-title' }, ['Jogos encerrados']));
+            finished.slice(0, 8).forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
+          } else {
+            sections.push(h('div', { class: 'view-empty' }, ['Nenhum jogo disponível nesta categoria.']));
+          }
+        }
+
+        var refreshLabel = 'Atualização automática a cada 5 min · ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        var newTree = h('div', { class: 'view-page' }, [
+          h('div', { class: 'view-header' }, [
+            h('h1', {}, [torneio.name || 'Torneio']),
+            h('p', {}, ['Acompanhe seus jogos em tempo real'])
+          ]),
+          h('div', { class: 'view-cat-tabs' }, catTabs)
+        ].concat(sections).concat([
+          h('p', { class: 'view-refresh-info' }, [refreshLabel])
+        ]));
+        ui.clear(container);
+        container.appendChild(newTree);
+      }
+
+      rebuild();
+    }
+
+    function loadFromStore() {
       store.list('tournaments').then(function (tournaments) {
         if (!tournaments || !tournaments.length) {
           ui.clear(container);
           container.appendChild(h('div', { class: 'view-empty' }, ['Nenhum torneio encontrado.']));
           return;
         }
-        var tid = tournaments[tournaments.length - 1].id;
         var torneio = tournaments[tournaments.length - 1];
-
+        var tid = torneio.id;
         Promise.all([getMatches(store, tid), getTeams(store, tid), getCategories(store, tid)]).then(function (results) {
-          var matches = results[0], teams = results[1], cats = results[2];
-
-          // Estado de filtro por categoria
-          var activeCat = state && state.cat ? state.cat : 'all';
-
-          function filteredMatches() {
-            if (activeCat === 'all') return matches;
-            return matches.filter(function (m) { return m.categoryId === activeCat; });
-          }
-
-          function rebuild() {
-            var fm = filteredMatches();
-            var live = fm.filter(isLive);
-            var sched = fm.filter(isScheduled).sort(function (a, b) { return (a.scheduledTime || '').localeCompare(b.scheduledTime || ''); });
-            var finished = fm.filter(isFinished);
-
-            var catTabs = [h('button', { class: 'view-cat-tab' + (activeCat === 'all' ? ' active' : ''), onclick: function () { activeCat = 'all'; rebuild(); }}, ['Todos'])];
-            cats.forEach(function (c) {
-              catTabs.push(h('button', { class: 'view-cat-tab' + (activeCat === c.id ? ' active' : ''), onclick: function () { activeCat = c.id; rebuild(); }}, [c.name]));
-            });
-
-            var sections = [];
-            if (live.length) {
-              sections.push(h('p', { class: 'view-section-title' }, ['Ao vivo']));
-              live.forEach(function (m) { sections.push(renderMatchCard(m, teams, true)); });
-            }
-            if (sched.length) {
-              sections.push(h('p', { class: 'view-section-title' }, ['Próximos jogos']));
-              sched.slice(0, 10).forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
-            }
-            if (!live.length && !sched.length) {
-              if (finished.length) {
-                sections.push(h('p', { class: 'view-section-title' }, ['Jogos encerrados']));
-                finished.slice(0, 8).forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
-              } else {
-                sections.push(h('div', { class: 'view-empty' }, ['Nenhum jogo disponível nesta categoria.']));
-              }
-            }
-
-            var refreshLabel = 'Atualização automática a cada 5 min · ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-            var newTree = h('div', { class: 'view-page' }, [
-              h('div', { class: 'view-header' }, [
-                h('h1', {}, [torneio.name || 'Torneio']),
-                h('p', {}, ['Acompanhe seus jogos em tempo real'])
-              ]),
-              h('div', { class: 'view-cat-tabs' }, catTabs)
-            ].concat(sections).concat([
-              h('p', { class: 'view-refresh-info' }, [refreshLabel])
-            ]));
-            ui.clear(container);
-            container.appendChild(newTree);
-          }
-
-          rebuild();
+          renderData(torneio, results[0], results[1], results[2]);
         });
       }).catch(function (err) {
         ui.clear(container);
         container.appendChild(h('div', { class: 'view-empty' }, ['Erro ao carregar dados: ' + (err && err.message ? err.message : err)]));
+      });
+    }
+
+    function load() {
+      // Tenta buscar view-data.json publicado (GitHub Pages)
+      fetch('./view-data.json?_=' + Date.now()).then(function (r) {
+        if (!r.ok) throw new Error('not found');
+        return r.json();
+      }).then(function (data) {
+        if (!data || !data.tournament) throw new Error('invalid');
+        renderData(data.tournament, data.matches || [], data.teams || [], data.categories || []);
+      }).catch(function () {
+        // fallback: IndexedDB (uso local)
+        loadFromStore();
       });
     }
 
