@@ -2454,8 +2454,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       m.sets.forEach(function (s) { ptsA += s.a; ptsB += s.b; if (s.a > s.b) setsA++; else if (s.b > s.a) setsB++; });
 
       var effSetsA = setsA, effSetsB = setsB;
-      if (bestOf > 1) {
-        var unplayed = Math.max(0, bestOf - m.sets.length);
+      if (bestOf === 3 && m.sets.length < 3) {
+        var unplayed = 3 - m.sets.length;
         if (setsA > setsB) effSetsA += unplayed;
         else if (setsB > setsA) effSetsB += unplayed;
       }
@@ -8340,8 +8340,8 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
             var sB = sets.filter(function (s) { return s.b > s.a; }).length;
             var wA = sA > sB, wB = sB > sA;
             var effSA = sA, effSB = sB;
-            if (catBestOf > 1) {
-              var unplayed = Math.max(0, catBestOf - sets.length);
+            if (catBestOf === 3 && sets.length < 3) {
+              var unplayed = 3 - sets.length;
               if (wA) effSA += unplayed;
               else if (wB) effSB += unplayed;
             }
