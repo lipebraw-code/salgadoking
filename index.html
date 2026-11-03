@@ -2436,7 +2436,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     { key: 'pointsFor', scope: 'all' }
   ];
 
-  function buildStats(teamIds, matches) {
+  function buildStats(teamIds, matches, options) {
+    var bestOf = (options && parseInt(options.bestOf)) || 1;
     var stats = {};
     teamIds.forEach(function (id) {
       stats[id] = { teamId: id, played: 0, wins: 0, losses: 0, pointsFor: 0, pointsAgainst: 0, diff: 0, setsWon: 0, setsLost: 0, setsDiff: 0, points: 0 };
@@ -2452,16 +2453,23 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       var ptsA = 0, ptsB = 0, setsA = 0, setsB = 0;
       m.sets.forEach(function (s) { ptsA += s.a; ptsB += s.b; if (s.a > s.b) setsA++; else if (s.b > s.a) setsB++; });
 
+      var effSetsA = setsA, effSetsB = setsB;
+      if (bestOf > 1) {
+        var unplayed = Math.max(0, bestOf - m.sets.length);
+        if (setsA > setsB) effSetsA += unplayed;
+        else if (setsB > setsA) effSetsB += unplayed;
+      }
+
       stats[idA].played++;
       stats[idB].played++;
       stats[idA].pointsFor += ptsA;
       stats[idA].pointsAgainst += ptsB;
       stats[idB].pointsFor += ptsB;
       stats[idB].pointsAgainst += ptsA;
-      stats[idA].setsWon += setsA;
-      stats[idA].setsLost += setsB;
-      stats[idB].setsWon += setsB;
-      stats[idB].setsLost += setsA;
+      stats[idA].setsWon += effSetsA;
+      stats[idA].setsLost += effSetsB;
+      stats[idB].setsWon += effSetsB;
+      stats[idB].setsLost += effSetsA;
 
       if (setsA > setsB) {
         stats[idA].wins++;
@@ -2520,9 +2528,9 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     }
   }
 
-  function rankGroup(teamIds, matches, criteria) {
+  function rankGroup(teamIds, matches, criteria, options) {
     var crit = Array.isArray(criteria) && criteria.length ? criteria : DEFAULT_CRITERIA;
-    var stats = buildStats(teamIds, matches);
+    var stats = buildStats(teamIds, matches, options);
     var rows = teamIds.map(function (id) { return stats[id]; });
 
     rows.sort(function (a, b) {
@@ -2537,11 +2545,11 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     return rows;
   }
 
-  function groupStandings(groups, matches, teamsById, criteria) {
+  function groupStandings(groups, matches, teamsById, criteria, options) {
     return groups.map(function (g) {
       var groupMatches = matches.filter(function (m) { return m.groupId === g.id; });
       var teamIds = (g.teamIds || []).filter(function (id) { return id != null; });
-      var rows = rankGroup(teamIds, groupMatches, criteria);
+      var rows = rankGroup(teamIds, groupMatches, criteria, options);
       rows.forEach(function (r) {
         r.teamName = teamsById[r.teamId] ? teamsById[r.teamId].name : '(equipe removida)';
       });
@@ -4192,7 +4200,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     var tbrId = (phase.tiebreakRuleId || cat.tiebreakRuleId);
     var criteria = null;
     if (tbrId) { var tbr = await this.get('tiebreakRules', tbrId); if (tbr) criteria = tbr.criteria; }
-    var standings = ST.groupStandings(groups, matches, teamsById, criteria);
+    var bestOf = (cat.defaultMatchFormat && parseInt(cat.defaultMatchFormat.bestOf)) || 1;
+    var standings = ST.groupStandings(groups, matches, teamsById, criteria, { bestOf: bestOf });
     var totalMatches = matches.length;
     var finishedMatches = matches.filter(function (m) { return m.status === 'finalizado'; }).length;
     return { phase: phase, groups: groups, standings: standings, totalMatches: totalMatches, finishedMatches: finishedMatches, complete: totalMatches > 0 && finishedMatches === totalMatches };
@@ -8320,6 +8329,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
         var byCat = {};
         cats.forEach(function (cat) {
           var catMs = matches.filter(function (m) { return m.categoryId === cat.id && isFinished(m); });
+          var catBestOf = (cat.defaultMatchFormat && parseInt(cat.defaultMatchFormat.bestOf)) || 1;
           var groups = {};
           catMs.forEach(function (m) {
             var gk = (m.groupId || m.group || '__all__') + '';
@@ -8329,14 +8339,20 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
             var sA = sets.filter(function (s) { return s.a > s.b; }).length;
             var sB = sets.filter(function (s) { return s.b > s.a; }).length;
             var wA = sA > sB, wB = sB > sA;
+            var effSA = sA, effSB = sB;
+            if (catBestOf > 1) {
+              var unplayed = Math.max(0, catBestOf - sets.length);
+              if (wA) effSA += unplayed;
+              else if (wB) effSB += unplayed;
+            }
             function addTeam(tid, win, sp, sc) {
               if (!tid) return;
               if (!g[tid]) g[tid] = { teamId: tid, j: 0, v: 0, d: 0, sp: 0, sc: 0, pts: 0 };
               var r = g[tid]; r.j++; r.sp += sp; r.sc += sc;
               if (win) { r.v++; r.pts += 2; } else { r.d++; r.pts++; }
             }
-            if (m.slotA && m.slotA.teamId) addTeam(m.slotA.teamId, wA, sA, sB);
-            if (m.slotB && m.slotB.teamId) addTeam(m.slotB.teamId, wB, sB, sA);
+            if (m.slotA && m.slotA.teamId) addTeam(m.slotA.teamId, wA, effSA, effSB);
+            if (m.slotB && m.slotB.teamId) addTeam(m.slotB.teamId, wB, effSB, effSA);
           });
           var gks = Object.keys(groups);
           byCat[cat.id] = {
