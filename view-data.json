@@ -81,8 +81,8 @@
     {
       "id": "mch_6a31d4bc-bfe4-4416-b447-4f3b3378b2b9",
       "createdAt": "2026-11-03T01:55:49.470Z",
-      "updatedAt": "2026-11-03T01:55:49.470Z",
-      "revision": 1,
+      "updatedAt": "2026-11-03T02:03:12.951Z",
+      "revision": 2,
       "categoryId": "cat_463c9af6-4b4c-4970-9792-8ac546bd0b0b",
       "phaseId": "ph_725e0ff0-03bd-47a6-b1d6-83a798b90d3f",
       "groupId": "grp_d7e8bc77-b7c2-47a9-8df4-25c7501873a4",
@@ -101,8 +101,17 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
-      "sets": [],
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 16
+        },
+        {
+          "a": 18,
+          "b": 10
+        }
+      ],
       "resultType": "normal",
       "resultDetail": null
     },
@@ -1595,5 +1604,5 @@
       "status": "configuracao"
     }
   ],
-  "publishedAt": "2026-11-03T01:59:18.451Z"
+  "publishedAt": "2026-11-03T02:03:29.791Z"
 }
