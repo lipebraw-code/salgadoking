@@ -5386,6 +5386,18 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
             h('td', null, h('a', { class: 'strong', href: '#' + ui.tpath(t) }, t.name)), h('td', null, ui.fmtRange(t.startDate, t.endDate)),
             h('td', null, t.venue || '—'), h('td', null, modalityBadge(t)), h('td', null, String(sums[i].categories)), h('td', null, statusBadge(t)),
             h('td', { class: 'actions' }, h('a', { class: 'btn sm', href: '#' + ui.tpath(t) }, 'Abrir'), h('a', { class: 'btn sm', href: '#/tournaments/' + t.id + '/edit' }, 'Editar'),
+              t.status === 'preparacao' ? h('button', { class: 'btn sm primary', type: 'button', onClick: async function () {
+                await ctx.run(function () { return ctx.store.update('tournaments', t.id, { status: 'andamento' }); });
+                ui.toast('Torneio iniciado.'); ctx.refresh();
+              } }, 'Iniciar') : null,
+              t.status === 'andamento' ? h('button', { class: 'btn sm', type: 'button', onClick: async function () {
+                await ctx.run(function () { return ctx.store.update('tournaments', t.id, { status: 'encerrado' }); });
+                ui.toast('Torneio encerrado.'); ctx.refresh();
+              } }, 'Encerrar') : null,
+              t.status === 'encerrado' ? h('button', { class: 'btn sm', type: 'button', onClick: async function () {
+                await ctx.run(function () { return ctx.store.update('tournaments', t.id, { status: 'andamento' }); });
+                ui.toast('Torneio reaberto.'); ctx.refresh();
+              } }, 'Reabrir') : null,
               h('button', { class: 'btn sm danger-ghost', type: 'button', dataset: { action: 'delete' }, onClick: async function () {
                 var ok = await ui.confirmDialog({ title: 'Excluir torneio', danger: true, confirmLabel: 'Excluir torneio',
                   message: 'Excluir "' + t.name + '"? Categorias, equipes e jogos deste torneio também serão apagados. Esta ação não pode ser desfeita.' });
@@ -5452,7 +5464,22 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     var head = h('section', { class: 'card hero' },
       h('div', { class: 'row between wrap' }, h('div', null, h('h1', null, t.name),
         h('div', { class: 'row gap wrap hero-meta' }, h('span', null, '📅 ' + ui.fmtRange(t.startDate, t.endDate)), h('span', null, '📍 ' + (t.venue || 'Local não informado')), modalityBadge(t), statusBadge(t))),
-        h('a', { class: 'btn', href: '#/tournaments/' + t.id + '/edit' }, 'Editar torneio')));
+        h('div', { class: 'row gap' },
+          t.status === 'preparacao' ? h('button', { class: 'btn primary', type: 'button', onClick: async function () {
+            await ctx.run(function () { return ctx.store.update('tournaments', t.id, { status: 'andamento' }); });
+            ui.toast('Torneio iniciado.'); ctx.refresh();
+          } }, 'Iniciar torneio') : null,
+          t.status === 'andamento' ? h('button', { class: 'btn', type: 'button', onClick: async function () {
+            var ok = await ui.confirmDialog({ title: 'Encerrar torneio', confirmLabel: 'Encerrar', message: 'Confirma encerramento do torneio "' + t.name + '"?' });
+            if (!ok) return;
+            await ctx.run(function () { return ctx.store.update('tournaments', t.id, { status: 'encerrado' }); });
+            ui.toast('Torneio encerrado.'); ctx.refresh();
+          } }, 'Encerrar torneio') : null,
+          t.status === 'encerrado' ? h('button', { class: 'btn', type: 'button', onClick: async function () {
+            await ctx.run(function () { return ctx.store.update('tournaments', t.id, { status: 'andamento' }); });
+            ui.toast('Torneio reaberto.'); ctx.refresh();
+          } }, 'Reabrir torneio') : null,
+          h('a', { class: 'btn', href: '#/tournaments/' + t.id + '/edit' }, 'Editar torneio'))));
     var tiles = h('section', { class: 'tiles', 'aria-label': 'Resumo' },
       tile('Categorias', sum.categories, sum.categories ? ui.plural(sum.activeCategories, 'ativa', 'ativas') : null, 'tile-categories'),
       tile('Equipes', sum.teams, null, 'tile-teams'), tile('Jogos', sum.matches, null, 'tile-matches'),
