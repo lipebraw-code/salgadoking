@@ -458,6 +458,11 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 .view-team-row.winner{font-weight:700}
 .view-score{font-weight:700;color:var(--primary,#3b82f6);min-width:24px;text-align:right}
 .view-sets-detail{font-size:.72rem;color:var(--muted,#6b7280);margin:4px 0 0;text-align:right}
+#erp-toast{position:fixed;bottom:20px;right:20px;padding:10px 16px;border-radius:8px;font-size:.85rem;font-weight:600;z-index:9999;transition:opacity .3s,transform .3s;opacity:0;transform:translateY(8px);pointer-events:none}
+#erp-toast.show{opacity:1;transform:translateY(0)}
+.erp-toast-info{background:#1f57d6;color:#fff}
+.erp-toast-ok{background:#16a34a;color:#fff}
+.erp-toast-err{background:#dc2626;color:#fff}
 .view-meta{font-size:.75rem;color:var(--muted,#6b7280);margin-top:6px}
 .view-empty{text-align:center;padding:32px 16px;color:var(--muted,#6b7280);font-size:.88rem}
 .view-refresh-info{text-align:center;font-size:.72rem;color:var(--muted,#6b7280);margin-top:20px;padding-top:12px;border-top:1px solid var(--border,#e5e7eb)}
@@ -507,6 +512,52 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
   // expõe para a página de acesso
   (typeof globalThis !== 'undefined' ? globalThis : window).__erpAccess = { load: loadAccess, save: saveAccess, defaults: ACCESS_DEFAULTS };
   var ACCESS = loadAccess();
+
+  // ── Auto-publicação em background ──────────────────────────────
+  var _pubTimer = null;
+  function _showToast(msg, type) {
+    var el = document.getElementById('erp-toast');
+    if (!el) { el = document.createElement('div'); el.id = 'erp-toast'; document.body.appendChild(el); }
+    el.textContent = msg;
+    el.className = 'erp-toast erp-toast-' + type + ' show';
+    clearTimeout(el._t);
+    el._t = setTimeout(function () { el.className = 'erp-toast'; }, 3500);
+  }
+  function _doPublish(store) {
+    var cfg = loadAccess();
+    if (!cfg.githubToken || !cfg.githubOwner || !cfg.githubRepo) return;
+    _showToast('Publicando…', 'info');
+    store.list('tournaments').then(function (ts) {
+      if (!ts || !ts.length) return;
+      var tournament = ts[ts.length - 1];
+      return store.list('categories', { tournamentId: tournament.id }).then(function (cats) {
+        var ids = cats.map(function (c) { return c.id; });
+        return Promise.all([
+          Promise.all(ids.map(function (id) { return store.list('matches', { categoryId: id }); })).then(function (a) { return [].concat.apply([], a); }),
+          Promise.all(ids.map(function (id) { return store.list('teams',   { categoryId: id }); })).then(function (a) { return [].concat.apply([], a); }),
+          cats
+        ]);
+      }).then(function (r) {
+        var data = { tournament: tournament, matches: r[0], teams: r[1], categories: r[2], publishedAt: new Date().toISOString() };
+        var b64  = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+        var url  = 'https://api.github.com/repos/' + cfg.githubOwner + '/' + cfg.githubRepo + '/contents/view-data.json';
+        var hdr  = { 'Authorization': 'token ' + cfg.githubToken, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' };
+        return fetch(url, { headers: hdr }).then(function (res) {
+          return res.status === 200 ? res.json().then(function (f) { return f.sha; }) : null;
+        }).then(function (sha) {
+          var body = { message: 'Auto: publicar dados ' + new Date().toLocaleString('pt-BR'), content: b64 };
+          if (sha) body.sha = sha;
+          return fetch(url, { method: 'PUT', headers: hdr, body: JSON.stringify(body) });
+        }).then(function (res) {
+          _showToast(res.ok ? 'Publicado ✓' : 'Falha ao publicar', res.ok ? 'ok' : 'err');
+        });
+      });
+    }).catch(function () { _showToast('Falha ao publicar', 'err'); });
+  }
+  (typeof globalThis !== 'undefined' ? globalThis : window).__erpAutoPublish = function (store) {
+    clearTimeout(_pubTimer);
+    _pubTimer = setTimeout(function () { _doPublish(store); }, 2500);
+  };
 
   var KEY = 'erp_acesso_ok';
 
@@ -3995,6 +4046,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 
     var updated = await this.update('matches', matchId, patch);
     await resolveDownstreamSlots(this, matchId, m.categoryId);
+    if (typeof window !== 'undefined' && window.__erpAutoPublish) window.__erpAutoPublish(this);
     return updated;
   };
 
@@ -4058,9 +4110,11 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     }
 
     var newStatus2 = (m.schedule && (m.schedule.date || m.schedule.time)) ? 'agendado' : 'aguardando';
-    return this.update('matches', matchId, {
+    var result2 = await this.update('matches', matchId, {
       status: newStatus2, sets: [], resultType: 'normal', resultDetail: null
     });
+    if (typeof window !== 'undefined' && window.__erpAutoPublish) window.__erpAutoPublish(this);
+    return result2;
   };
 
   P.autoSchedule = async function (phaseId, options) {
