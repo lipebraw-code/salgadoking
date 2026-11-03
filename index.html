@@ -5491,7 +5491,14 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
             h('button', { class: 'btn sm', type: 'button', dataset: { action: 'toggle' }, onClick: async function () {
               await ctx.run(function () { return ctx.store.setCategoryActive(c.id, !c.active); });
               ui.toast(c.active ? 'Categoria desativada.' : 'Categoria ativada.'); ctx.refresh();
-            } }, c.active ? 'Desativar' : 'Ativar')));
+            } }, c.active ? 'Desativar' : 'Ativar'),
+            h('button', { class: 'btn sm danger-ghost', type: 'button', dataset: { action: 'delete-cat' }, onClick: async function () {
+              var ok = await ui.confirmDialog({ title: 'Excluir categoria', danger: true, confirmLabel: 'Excluir categoria',
+                message: 'Excluir "' + c.name + '"? Equipes, fases e jogos desta categoria também serão apagados. Esta ação não pode ser desfeita.' });
+              if (!ok) return;
+              await ctx.run(async function () { await ctx.store.remove('categories', c.id, { cascade: true }); });
+              ui.toast('Categoria excluída.'); ctx.refresh();
+            } }, 'Excluir')));
       }))));
   };
 
