@@ -8059,6 +8059,9 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
         alert('Preencha Owner, Repo e Token do GitHub antes de publicar.');
         return;
       }
+      // auto-salva as credenciais para não precisar redigitar
+      var cfgAtual = erpAccess.load();
+      erpAccess.save(Object.assign({}, cfgAtual, { githubOwner: owner, githubRepo: repo, githubToken: token }));
       publishBtn.textContent = 'Publicando…';
       publishBtn.disabled = true;
 
