@@ -466,6 +466,18 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 .view-meta{font-size:.75rem;color:var(--muted,#6b7280);margin-top:6px}
 .view-empty{text-align:center;padding:32px 16px;color:var(--muted,#6b7280);font-size:.88rem}
 .view-refresh-info{text-align:center;font-size:.72rem;color:var(--muted,#6b7280);margin-top:20px;padding-top:12px;border-top:1px solid var(--border,#e5e7eb)}
+.view-tabs{display:flex;gap:4px;margin-bottom:12px}
+.view-tab{flex:1;padding:8px 4px;border:1px solid var(--border,#e5e7eb);border-radius:6px;background:transparent;color:var(--muted,#6b7280);font-size:.83rem;font-weight:500;cursor:pointer;transition:all .15s}
+.view-tab.active{background:var(--primary,#1f57d6);border-color:var(--primary,#1f57d6);color:#fff}
+.vst-table{background:var(--surface,#fff);border-radius:8px;overflow:hidden;margin-bottom:12px;border:1px solid var(--border,#e5e7eb)}
+.vst-row{display:grid;grid-template-columns:24px 1fr 26px 26px 26px 26px 26px 30px;align-items:center;padding:6px 8px;gap:2px;font-size:.8rem}
+.vst-header{background:var(--bg,#f9fafb);font-weight:700;font-size:.7rem;color:var(--muted,#6b7280);border-bottom:1px solid var(--border,#e5e7eb)}
+.vst-row:not(.vst-header):nth-child(even){background:var(--bg,#f9fafb)}
+.vst-first .vst-rank{color:var(--primary,#1f57d6);font-weight:700}
+.vst-pts{font-weight:700;color:var(--primary,#1f57d6)}
+.vst-team{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.vst-num{text-align:center}
+.view-group-title{font-size:.78rem;font-weight:600;color:var(--muted,#6b7280);margin:8px 0 4px}
 /* ===== Modo Atleta (/view) — sem sidebar ===== */
 #app.view-fullscreen .sidebar{display:none!important}
 #app.view-fullscreen .main{width:100%}
@@ -529,7 +541,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     _showToast('Publicando…', 'info');
     store.list('tournaments').then(function (ts) {
       if (!ts || !ts.length) return;
-      var tournament = ts[ts.length - 1];
+      var selId = null; try { selId = localStorage.getItem('erp_selected_tournament_id'); } catch(e) {}
+      var tournament = (selId && ts.find(function(t){ return t.id === selId; })) || ts[ts.length - 1];
       return store.list('categories', { tournamentId: tournament.id }).then(function (cats) {
         var ids = cats.map(function (c) { return c.id; });
         return Promise.all([
@@ -8037,6 +8050,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
       alert('Configurações salvas!');
     }
 
+    var tourSelect;
     function publishView() {
       var owner = inputs.githubOwner.value.trim();
       var repo  = inputs.githubRepo.value.trim();
@@ -8055,7 +8069,8 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
           alert('Nenhum torneio encontrado no banco local.');
           return;
         }
-        var tournament = tournaments[tournaments.length - 1];
+        var selId = tourSelect ? tourSelect.value : '';
+        var tournament = (selId && tournaments.find(function(t){ return t.id === selId; })) || tournaments[tournaments.length - 1];
         var tid = tournament.id;
         // categorias primeiro (têm tournamentId); depois matches e teams por categoryId
         return store.list('categories', { tournamentId: tid }).then(function (cats) {
@@ -8099,6 +8114,34 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
     }
 
     var publishBtn = h('button', { class: 'btn btn-success', onclick: publishView }, ['Publicar View']);
+
+    tourSelect = h('select', { class: '' });
+    tourSelect.appendChild(h('option', { value: '' }, ['Carregando torneios…']));
+    tourSelect.addEventListener('change', function () {
+      try { localStorage.setItem('erp_selected_tournament_id', tourSelect.value); } catch(e) {}
+    });
+    var tourSelectField = h('div', { class: 'acesso-field' }, [
+      h('label', {}, ['Torneio a publicar']),
+      tourSelect
+    ]);
+    setTimeout(function () {
+      ctx.store.list('tournaments').then(function (ts) {
+        while (tourSelect.firstChild) tourSelect.removeChild(tourSelect.firstChild);
+        if (!ts || !ts.length) {
+          tourSelect.appendChild(h('option', { value: '' }, ['Nenhum torneio encontrado']));
+          return;
+        }
+        var savedId = null; try { savedId = localStorage.getItem('erp_selected_tournament_id'); } catch(e) {}
+        ts.forEach(function (t) {
+          var opt = h('option', { value: t.id }, [t.name || t.id]);
+          if (t.id === savedId) opt.selected = true;
+          tourSelect.appendChild(opt);
+        });
+        if (!savedId || !ts.find(function (t) { return t.id === savedId; })) {
+          tourSelect.value = ts[ts.length - 1].id;
+        }
+      });
+    }, 0);
 
     var statusDiv = h('div', { class: 'acesso-status ' + st.code }, [st.label]);
 
@@ -8162,6 +8205,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
         h('div', { class: 'acesso-field' }, [h('label', {}, ['GitHub Owner (usuário ou org)']), ghOwnerInput]),
         h('div', { class: 'acesso-field' }, [h('label', {}, ['GitHub Repo (nome do repositório)']), ghRepoInput]),
         h('div', { class: 'acesso-field' }, [h('label', {}, ['GitHub Token (classic, com permissão repo)']), ghTokenInput]),
+        tourSelectField,
         publishBtn
       ]),
       h('button', { class: 'btn btn-primary', onclick: save }, ['Salvar configurações'])
@@ -8262,10 +8306,75 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
 
     function renderData(torneio, matches, teams, cats) {
       var activeCat = 'all';
+      var activeTab = 'jogos';
 
       function filteredMatches() {
         if (activeCat === 'all') return matches;
         return matches.filter(function (m) { return m.categoryId === activeCat; });
+      }
+
+      function computeStandings() {
+        var byCat = {};
+        cats.forEach(function (cat) {
+          var catMs = matches.filter(function (m) { return m.categoryId === cat.id && isFinished(m); });
+          var groups = {};
+          catMs.forEach(function (m) {
+            var gk = (m.groupId || m.group || '__all__') + '';
+            if (!groups[gk]) groups[gk] = {};
+            var g = groups[gk];
+            var sets = m.sets || [];
+            var sA = sets.filter(function (s) { return s.a > s.b; }).length;
+            var sB = sets.filter(function (s) { return s.b > s.a; }).length;
+            var wA = sA > sB, wB = sB > sA;
+            function addTeam(tid, win, sp, sc) {
+              if (!tid) return;
+              if (!g[tid]) g[tid] = { teamId: tid, j: 0, v: 0, d: 0, sp: 0, sc: 0, pts: 0 };
+              var r = g[tid]; r.j++; r.sp += sp; r.sc += sc;
+              if (win) { r.v++; r.pts += 2; } else { r.d++; r.pts++; }
+            }
+            if (m.slotA && m.slotA.teamId) addTeam(m.slotA.teamId, wA, sA, sB);
+            if (m.slotB && m.slotB.teamId) addTeam(m.slotB.teamId, wB, sB, sA);
+          });
+          var gks = Object.keys(groups);
+          byCat[cat.id] = {
+            catName: cat.name,
+            groups: gks.map(function (gk, i) {
+              var rows = Object.keys(groups[gk]).map(function (tid) { return groups[gk][tid]; });
+              rows.sort(function (a, b) {
+                if (b.pts !== a.pts) return b.pts - a.pts;
+                return (b.sp - b.sc) - (a.sp - a.sc);
+              });
+              return { name: gks.length > 1 ? 'Chave ' + String.fromCharCode(65 + i) : cat.name, rows: rows };
+            })
+          };
+        });
+        return byCat;
+      }
+
+      function renderStandingsTable(rows) {
+        var hdr = h('div', { class: 'vst-row vst-header' }, [
+          h('span', { class: 'vst-rank' }, ['#']),
+          h('span', { class: 'vst-team' }, ['Equipe']),
+          h('span', { class: 'vst-num' }, ['J']),
+          h('span', { class: 'vst-num' }, ['V']),
+          h('span', { class: 'vst-num' }, ['D']),
+          h('span', { class: 'vst-num' }, ['SP']),
+          h('span', { class: 'vst-num' }, ['SC']),
+          h('span', { class: 'vst-num vst-pts' }, ['Pts'])
+        ]);
+        var dataRows = rows.map(function (r, i) {
+          return h('div', { class: 'vst-row' + (i === 0 ? ' vst-first' : '') }, [
+            h('span', { class: 'vst-rank' }, [String(i + 1)]),
+            h('span', { class: 'vst-team' }, [teamName(teams, r.teamId)]),
+            h('span', { class: 'vst-num' }, [String(r.j)]),
+            h('span', { class: 'vst-num' }, [String(r.v)]),
+            h('span', { class: 'vst-num' }, [String(r.d)]),
+            h('span', { class: 'vst-num' }, [String(r.sp)]),
+            h('span', { class: 'vst-num' }, [String(r.sc)]),
+            h('span', { class: 'vst-num vst-pts' }, [String(r.pts)])
+          ]);
+        });
+        return h('div', { class: 'vst-table' }, [hdr].concat(dataRows));
       }
 
       function rebuild() {
@@ -8274,39 +8383,101 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
         var sched    = fm.filter(isScheduled).sort(function (a, b) { return (a.scheduledTime || '').localeCompare(b.scheduledTime || ''); });
         var finished = fm.filter(isFinished);
 
-        var catTabs = [h('button', { class: 'view-cat-tab' + (activeCat === 'all' ? ' active' : ''), onclick: function () { activeCat = 'all'; rebuild(); }}, ['Todos'])];
+        var tabBar = h('div', { class: 'view-tabs' }, [
+          ['jogos', 'Jogos'], ['classificacao', 'Classificação'], ['resultados', 'Resultados']
+        ].map(function (p) {
+          return h('button', {
+            class: 'view-tab' + (activeTab === p[0] ? ' active' : ''),
+            onclick: function () { activeTab = p[0]; rebuild(); }
+          }, [p[1]]);
+        }));
+
+        var catTabs = [h('button', { class: 'view-cat-tab' + (activeCat === 'all' ? ' active' : ''), onclick: function () { activeCat = 'all'; rebuild(); } }, ['Todos'])];
         cats.forEach(function (c) {
-          catTabs.push(h('button', { class: 'view-cat-tab' + (activeCat === c.id ? ' active' : ''), onclick: function () { activeCat = c.id; rebuild(); }}, [c.name]));
+          catTabs.push(h('button', { class: 'view-cat-tab' + (activeCat === c.id ? ' active' : ''), onclick: function () { activeCat = c.id; rebuild(); } }, [c.name]));
         });
 
         var sections = [];
-        if (live.length) {
-          sections.push(h('p', { class: 'view-section-title' }, ['Ao vivo']));
-          live.forEach(function (m) { sections.push(renderMatchCard(m, teams, true)); });
+
+        function groupByChave(list) {
+          var order = [], map = {};
+          list.forEach(function (m) {
+            var gk = m.groupId ? String(m.groupId) : '__none__';
+            if (!map[gk]) { map[gk] = []; order.push(gk); }
+            map[gk].push(m);
+          });
+          return { order: order, map: map };
         }
-        if (sched.length) {
-          sections.push(h('p', { class: 'view-section-title' }, ['Próximos jogos']));
-          sched.slice(0, 10).forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
+        function renderGrouped(list, showLive) {
+          var g = groupByChave(list);
+          var hasGroups = g.order.some(function (k) { return k !== '__none__'; });
+          var letterIdx = 0;
+          g.order.forEach(function (gk) {
+            if (hasGroups && gk !== '__none__') {
+              sections.push(h('p', { class: 'view-group-title' }, ['Chave ' + String.fromCharCode(65 + letterIdx)]));
+              letterIdx++;
+            }
+            g.map[gk].forEach(function (m) { sections.push(renderMatchCard(m, teams, showLive)); });
+          });
         }
-        if (!live.length && !sched.length) {
-          if (finished.length) {
-            sections.push(h('p', { class: 'view-section-title' }, ['Jogos encerrados']));
-            finished.slice(0, 8).forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
+
+        if (activeTab === 'jogos') {
+          if (live.length) {
+            sections.push(h('p', { class: 'view-section-title' }, ['Ao vivo']));
+            renderGrouped(live, true);
+          }
+          if (sched.length) {
+            sections.push(h('p', { class: 'view-section-title' }, ['Próximos jogos']));
+            renderGrouped(sched, false);
+          }
+          if (!live.length && !sched.length) {
+            if (finished.length) {
+              sections.push(h('p', { class: 'view-section-title' }, ['Jogos encerrados']));
+              renderGrouped(finished, false);
+            } else {
+              sections.push(h('div', { class: 'view-empty' }, ['Nenhum jogo disponível nesta categoria.']));
+            }
+          }
+        } else if (activeTab === 'classificacao') {
+          var standings = computeStandings();
+          if (!cats.length) {
+            sections.push(h('div', { class: 'view-empty' }, ['Nenhuma categoria encontrada.']));
           } else {
-            sections.push(h('div', { class: 'view-empty' }, ['Nenhum jogo disponível nesta categoria.']));
+            cats.forEach(function (cat) {
+              var catData = standings[cat.id] || { groups: [] };
+              if (cats.length > 1) sections.push(h('p', { class: 'view-section-title' }, [cat.name]));
+              if (catData.groups.length === 0) {
+                sections.push(h('div', { class: 'view-empty' }, ['Sem dados de classificação.']));
+              } else {
+                catData.groups.forEach(function (g) {
+                  if (catData.groups.length > 1) sections.push(h('p', { class: 'view-group-title' }, [g.name]));
+                  sections.push(renderStandingsTable(g.rows));
+                });
+              }
+            });
+          }
+        } else if (activeTab === 'resultados') {
+          var finMs = (activeCat === 'all' ? matches : matches.filter(function (m) { return m.categoryId === activeCat; })).filter(isFinished);
+          if (finMs.length) {
+            finMs.forEach(function (m) { sections.push(renderMatchCard(m, teams, false)); });
+          } else {
+            sections.push(h('div', { class: 'view-empty' }, ['Nenhum resultado disponível ainda.']));
           }
         }
 
         var refreshLabel = 'Atualização automática a cada 5 min · ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-        var newTree = h('div', { class: 'view-page' }, [
+        var children = [
           h('div', { class: 'view-header' }, [
             h('h1', {}, [torneio.name || 'Torneio']),
             h('p', {}, ['Acompanhe seus jogos em tempo real'])
           ]),
-          h('div', { class: 'view-cat-tabs' }, catTabs)
-        ].concat(sections).concat([
-          h('p', { class: 'view-refresh-info' }, [refreshLabel])
-        ]));
+          tabBar
+        ];
+        if (activeTab !== 'classificacao') children.push(h('div', { class: 'view-cat-tabs' }, catTabs));
+        children = children.concat(sections);
+        children.push(h('p', { class: 'view-refresh-info' }, [refreshLabel]));
+
+        var newTree = h('div', { class: 'view-page' }, children);
         ui.clear(container);
         container.appendChild(newTree);
       }
