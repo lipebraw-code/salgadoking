@@ -155,8 +155,8 @@
     {
       "id": "mch_2e5f4497-4191-4a58-bb07-b7de6e151e11",
       "createdAt": "2026-11-03T01:55:49.478Z",
-      "updatedAt": "2026-11-03T01:55:49.478Z",
-      "revision": 1,
+      "updatedAt": "2026-11-03T11:20:38.453Z",
+      "revision": 3,
       "categoryId": "cat_463c9af6-4b4c-4970-9792-8ac546bd0b0b",
       "phaseId": "ph_725e0ff0-03bd-47a6-b1d6-83a798b90d3f",
       "groupId": "grp_d7e8bc77-b7c2-47a9-8df4-25c7501873a4",
@@ -175,8 +175,17 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
-      "sets": [],
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 9
+        },
+        {
+          "a": 18,
+          "b": 6
+        }
+      ],
       "resultType": "normal",
       "resultDetail": null
     },
@@ -435,8 +444,8 @@
     {
       "id": "mch_b296b83f-bd62-46d6-855b-2789331d6c5f",
       "createdAt": "2026-11-03T01:55:55.032Z",
-      "updatedAt": "2026-11-03T01:55:55.032Z",
-      "revision": 1,
+      "updatedAt": "2026-11-03T11:20:54.646Z",
+      "revision": 3,
       "categoryId": "cat_60c2e314-4973-4d43-ac97-52d57c482bac",
       "phaseId": "ph_4275e830-0561-4600-91be-e4131dda35dd",
       "groupId": "grp_4115ecce-b802-4093-91d3-ded686e99882",
@@ -455,16 +464,25 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
-      "sets": [],
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 16
+        },
+        {
+          "a": 19,
+          "b": 17
+        }
+      ],
       "resultType": "normal",
       "resultDetail": null
     },
     {
       "id": "mch_c56c1568-3750-4e4c-aebe-ba09d9509247",
       "createdAt": "2026-11-03T01:55:55.036Z",
-      "updatedAt": "2026-11-03T01:55:55.036Z",
-      "revision": 1,
+      "updatedAt": "2026-11-03T11:21:45.254Z",
+      "revision": 3,
       "categoryId": "cat_60c2e314-4973-4d43-ac97-52d57c482bac",
       "phaseId": "ph_4275e830-0561-4600-91be-e4131dda35dd",
       "groupId": "grp_4115ecce-b802-4093-91d3-ded686e99882",
@@ -483,8 +501,21 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
-      "sets": [],
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 16
+        },
+        {
+          "a": 18,
+          "b": 20
+        },
+        {
+          "a": 15,
+          "b": 5
+        }
+      ],
       "resultType": "normal",
       "resultDetail": null
     },
@@ -1613,5 +1644,5 @@
       "status": "configuracao"
     }
   ],
-  "publishedAt": "2026-11-03T02:14:42.761Z"
+  "publishedAt": "2026-11-03T11:22:35.995Z"
 }
