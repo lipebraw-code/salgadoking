@@ -656,15 +656,33 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 
   var KEY = 'erp_acesso_ok';
 
+  /* Lê parâmetros de acesso via URL: ?s=2026-11-05T08:00&h=24&p=Senha */
+  var URL_ACCESS = (function () {
+    try {
+      var search = location.search.slice(1);
+      var qp = {};
+      search.split('&').forEach(function (p) { var kv = p.split('='); if (kv[0]) qp[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || ''); });
+      if (qp.s && qp.h && qp.p) {
+        var ua = { inicio: qp.s.replace('T', ' '), duracaoHoras: Number(qp.h), senha: qp.p };
+        try { sessionStorage.setItem('erp_url_access', JSON.stringify(ua)); } catch (e) {}
+        return ua;
+      }
+      var saved = sessionStorage.getItem('erp_url_access');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return null;
+  })();
+
   function parseLocal(str) {
-    var p = str.split(/[\s:-]/);
-    return new Date(+p[0], +p[1]-1, +p[2], +p[3], +p[4]);
+    var p = str.replace('T', ' ').split(/[\s:-]/);
+    return new Date(+p[0], +p[1]-1, +p[2], +p[3]||0, +p[4]||0);
   }
 
   function checkWindow() {
+    var cfg = URL_ACCESS || ACCESS;
     var now   = new Date();
-    var start = parseLocal(ACCESS.inicio);
-    var end   = new Date(start.getTime() + ACCESS.duracaoHoras * 3600000);
+    var start = parseLocal(cfg.inicio);
+    var end   = new Date(start.getTime() + cfg.duracaoHoras * 3600000);
     if (now < start) return 'antes';
     if (now > end)   return 'expirado';
     return 'ok';
@@ -731,13 +749,14 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     var err = document.getElementById('erp-err');
 
     function tentar() {
+      var senhaUser = URL_ACCESS ? URL_ACCESS.senha : ACCESS.senha;
       if (pwd.value === ACCESS.senhaAdmin) {
         try { sessionStorage.setItem(KEY, 'admin'); } catch(e){}
         liberarApp();
         return;
       }
       if (checkWindow() !== 'ok') { err.textContent = 'Acesso expirado.'; return; }
-      if (pwd.value === ACCESS.senha) {
+      if (pwd.value === senhaUser) {
         try { sessionStorage.setItem(KEY, '1'); } catch(e){}
         liberarApp();
         iniciarTimer();
@@ -5292,8 +5311,10 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     else this.rootEl.classList.remove('tv-fullscreen');
     root.document.title = (r.title ? r.title + ' · ' : '') + 'ERP Vôlei';
     // barra lateral
+    var isAdmin; try { isAdmin = sessionStorage.getItem('erp_acesso_ok') === 'admin'; } catch(e) { isAdmin = true; }
     ui.clear(this.nav);
     ui.GLOBAL_NAV.forEach(function (n) {
+      if (n.id === 'acesso' && !isAdmin) return;
       var href = n.href || (t ? '/t/' + t.id + n.scoped : n.scoped);
       self.nav.appendChild(h('a', { class: 'nav-item' + (r.section === n.id ? ' active' : ''), href: '#' + href, 'aria-current': r.section === n.id ? 'page' : null },
         h('span', { class: 'glyph', 'aria-hidden': 'true' }, n.glyph), n.label));
@@ -5333,7 +5354,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       sheetLinks.push(null);
     }
     sheetLinks.push({ id: 'tournaments', label: 'Todos os torneios', glyph: '🏆', href: '/tournaments' });
-    sheetLinks.push({ id: 'acesso',      label: 'Acesso público',    glyph: '🔑', href: '/acesso' });
+    if (isAdmin) sheetLinks.push({ id: 'acesso', label: 'Acesso público', glyph: '🔑', href: '/acesso' });
     var bsOverlay = this.bottomOverlay, bsSheet = this.bottomSheet;
     sheetLinks.forEach(function (item) {
       if (!item) { bsSheet.appendChild(h('div', { class: 'bs-sep' })); return; }
@@ -8485,6 +8506,7 @@ var qrcode=function(){function i(t,r){function a(t,r){g=function(t){for(var r=ne
   }
 
   ui.route('/acesso', function (ctx) {
+    try { if (sessionStorage.getItem('erp_acesso_ok') !== 'admin') return { redirect: '/dashboard' }; } catch(e){}
     var cfg = erpAccess.load();
     var st = statusInfo();
 
