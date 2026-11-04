@@ -1374,6 +1374,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       scoringRuleId: d(i.scoringRuleId, null), tiebreakRuleId: d(i.tiebreakRuleId, null),
       structureMode: d(i.structureMode, null),
       defaultMatchFormat: createMatchFormat(i.defaultMatchFormat),
+      bracketConfig: i.bracketConfig ? { bracketMode: i.bracketConfig.bracketMode || null, templateKey: i.bracketConfig.templateKey || null } : null,
       active: d(i.active, true),                    // categoria ativa/inativa (inativa não entra nas operações do evento)
       status: d(i.status, 'configuracao')
     });
@@ -3456,6 +3457,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       useAthletes: !!input.useAthletes, active: input.active === undefined ? true : !!input.active
     };
     if (input.defaultMatchFormat !== undefined) fields.defaultMatchFormat = input.defaultMatchFormat;
+    if (input.bracketConfig !== undefined) fields.bracketConfig = input.bracketConfig || null;
     if (input.scoringRuleId !== undefined) fields.scoringRuleId = input.scoringRuleId || null;
     if (input.tiebreakRuleId !== undefined) fields.tiebreakRuleId = input.tiebreakRuleId || null;
     if (issues.length) {   // mostra TUDO de uma vez: junta os problemas dos demais campos
@@ -5727,7 +5729,13 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       minDiff: h('input', { type: 'number', name: 'minDiff', min: 1, max: 10, value: fmtVal(fmt, 'minDiff'), placeholder: '2 (padrão)' }),
       maxPoints: h('input', { type: 'number', name: 'maxPoints', min: 1, max: 99, value: fmtVal(fmt, 'maxPoints'), placeholder: 'Sem limite' }),
       useAthletes: ui.checkbox('useAthletes', 'Cadastrar os atletas de cada equipe (tipos com mais de 2 atletas; dupla usa só o nome da dupla)', cat ? cat.useAthletes : false),
-      active: cat ? ui.checkbox('active', 'Categoria ativa', cat.active) : null
+      active: cat ? ui.checkbox('active', 'Categoria ativa', cat.active) : null,
+      bracketMode: ui.select('bracketMode', [
+        { value: '', label: 'Automático (decide na hora)' },
+        { value: 'seedRanking', label: 'Ranking geral' },
+        { value: 'virtualGroup', label: 'Grupo virtual' },
+        { value: 'bestLoser', label: 'Melhor perdedor' }
+      ], (cat && cat.bracketConfig && cat.bracketConfig.bracketMode) || '')
     };
 
     var tiebreakWrap = h('div', { class: 'field-group tiebreak-field', style: Number(c.bestOf.value) > 1 ? '' : 'display:none' });
@@ -5750,6 +5758,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
             gender: c.gender.getRef(), level: c.level.getRef(), teamType: c.teamType.getRef(), modality: c.modality.value,
             teamsCount: c.teamsCount.value === '' ? null : Number(c.teamsCount.value),
             defaultMatchFormat: { bestOf: bestOf, pointsToWin: pts, tiebreakPoints: bestOf > 1 ? tbPts : null, minDiff: minD, maxPoints: maxP },
+            bracketConfig: c.bracketMode.value ? { bracketMode: c.bracketMode.value, templateKey: null } : null,
             useAthletes: c.useAthletes.querySelector('input').checked, active: c.active ? c.active.querySelector('input').checked : true });
         });
         ui.toast(isNew ? 'Categoria criada.' : 'Categoria salva.');
@@ -5768,6 +5777,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         tiebreakWrap,
         ui.field({ name: 'minDiff', label: 'Diferença mínima', control: c.minDiff, hint: 'Pontos de vantagem para fechar o set. Padrão: 2.' }),
         ui.field({ name: 'maxPoints', label: 'Pontuação máxima', control: c.maxPoints, hint: 'Teto de pontos (ex.: 30). Vazio = sem limite.' })),
+      h('fieldset', { class: 'match-format-fieldset wide' }, h('legend', null, 'Fase eliminatória'),
+        ui.field({ name: 'bracketMode', label: 'Repescagem', control: c.bracketMode, hint: 'Usado quando o total de classificados não é potência de 2 (4, 8, 16…). Se não sabe, deixe Automático.' })),
       h('div', { class: 'field wide', dataset: { field: 'useAthletes' } }, c.useAthletes, h('div', { class: 'error', role: 'alert' })),
       c.active ? h('div', { class: 'field wide', dataset: { field: 'active' } }, c.active, h('div', { class: 'hint' }, 'Categorias inativas ficam guardadas, mas fora das operações do evento.'), h('div', { class: 'error', role: 'alert' })) : null,
       h('div', { class: 'form-actions wide' }, submit, h('a', { class: 'btn', href: '#' + ui.tpath(t, '/categories') }, isNew ? 'Cancelar' : 'Voltar às categorias')));
@@ -7317,14 +7328,19 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       );
     } else if (data.complete) {
       var templates = await store.getKnockoutTemplates(cat.id);
-      var selectedTemplate = templates.length > 0 ? templates[0].key : null;
-      var selectedBracketMode = needsWC ? 'seedRanking' : null;
+      var savedBracketCfg = cat.bracketConfig || {};
+      var savedTemplateKey = savedBracketCfg.templateKey || null;
+      var selectedTemplate = savedTemplateKey && templates.some(function (t) { return t.key === savedTemplateKey; })
+        ? savedTemplateKey : (templates.length > 0 ? templates[0].key : null);
+      var savedBracketMode = savedBracketCfg.bracketMode || null;
+      var selectedBracketMode = needsWC ? (savedBracketMode || 'seedRanking') : null;
 
       var templateEls = [];
       if (templates.length > 1) {
-        templateEls = templates.map(function (tpl, idx) {
+        templateEls = templates.map(function (tpl) {
+          var isChecked = tpl.key === selectedTemplate;
           return h('label', { class: 'template-option', style: 'display:inline-flex;align-items:center;gap:4px;margin-right:12px;cursor:pointer' },
-            h('input', { type: 'radio', name: 'ko-template', value: tpl.key, checked: idx === 0,
+            h('input', { type: 'radio', name: 'ko-template', value: tpl.key, checked: isChecked,
               onChange: function () { selectedTemplate = tpl.key; } }),
             tpl.label
           );
@@ -7338,11 +7354,15 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           { key: 'virtualGroup', label: 'Grupo virtual (WC por chave)' },
           { key: 'bestLoser', label: 'Melhor perdedor (pós-quartas)' }
         ];
+        var presetHint = savedBracketMode
+          ? h('span', { class: 'muted small', style: 'margin-left:6px' }, '(pré-definido na categoria)')
+          : null;
         modeEls = [
-          h('div', { style: 'margin:8px 0 4px;font-weight:600;font-size:0.9em' }, 'Modo repescagem (bracket não é potência de 2):'),
-          h('div', { style: 'margin-bottom:8px' }, modes.map(function (mo, idx) {
+          h('div', { style: 'margin:8px 0 4px;font-weight:600;font-size:0.9em' }, ['Modo repescagem (bracket não é potência de 2):', presetHint]),
+          h('div', { style: 'margin-bottom:8px' }, modes.map(function (mo) {
+            var isChecked = mo.key === selectedBracketMode;
             return h('label', { style: 'display:inline-flex;align-items:center;gap:4px;margin-right:14px;cursor:pointer' },
-              h('input', { type: 'radio', name: 'ko-mode', value: mo.key, checked: idx === 0,
+              h('input', { type: 'radio', name: 'ko-mode', value: mo.key, checked: isChecked,
                 onChange: function () { selectedBracketMode = mo.key; } }),
               mo.label
             );
