@@ -656,12 +656,20 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
 
   var KEY = 'erp_acesso_ok';
 
-  /* Lê parâmetros de acesso via URL: ?s=2026-11-05T08:00&h=24&p=Senha */
+  /* Lê parâmetros de acesso via URL: ?s=2026-11-05T08:00&h=24&p=Senha&gt=GithubToken */
   var URL_ACCESS = (function () {
     try {
       var search = location.search.slice(1);
       var qp = {};
       search.split('&').forEach(function (p) { var kv = p.split('='); if (kv[0]) qp[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || ''); });
+      /* gt= salva o token do GitHub no localStorage para publicação persistente */
+      if (qp.gt) {
+        try {
+          var cur = JSON.parse(localStorage.getItem('erp_access_cfg') || '{}');
+          cur.githubToken = qp.gt;
+          localStorage.setItem('erp_access_cfg', JSON.stringify(cur));
+        } catch (e) {}
+      }
       if (qp.s && qp.h && qp.p) {
         var ua = { inicio: qp.s.replace('T', ' '), duracaoHoras: Number(qp.h), senha: qp.p };
         try { sessionStorage.setItem('erp_url_access', JSON.stringify(ua)); } catch (e) {}
