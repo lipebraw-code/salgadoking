@@ -1374,7 +1374,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       scoringRuleId: d(i.scoringRuleId, null), tiebreakRuleId: d(i.tiebreakRuleId, null),
       structureMode: d(i.structureMode, null),
       defaultMatchFormat: createMatchFormat(i.defaultMatchFormat),
-      bracketConfig: i.bracketConfig ? { bracketMode: i.bracketConfig.bracketMode || null, templateKey: i.bracketConfig.templateKey || null } : null,
+      bracketConfig: i.bracketConfig ? { bracketMode: i.bracketConfig.bracketMode || null, templateKey: i.bracketConfig.templateKey || null, bracketSize: i.bracketConfig.bracketSize || null } : null,
       active: d(i.active, true),                    // categoria ativa/inativa (inativa não entra nas operações do evento)
       status: d(i.status, 'configuracao')
     });
@@ -5735,7 +5735,13 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         { value: 'seedRanking', label: 'Ranking geral' },
         { value: 'virtualGroup', label: 'Grupo virtual' },
         { value: 'bestLoser', label: 'Melhor perdedor' }
-      ], (cat && cat.bracketConfig && cat.bracketConfig.bracketMode) || '')
+      ], (cat && cat.bracketConfig && cat.bracketConfig.bracketMode) || ''),
+      bracketSize: ui.select('bracketSize', [
+        { value: '', label: 'Automático (qualquer tamanho)' },
+        { value: '4', label: 'Semifinal — 4 times' },
+        { value: '8', label: 'Quartas de final — 8 times' },
+        { value: '16', label: 'Oitavas de final — 16 times' }
+      ], (cat && cat.bracketConfig && cat.bracketConfig.bracketSize) ? String(cat.bracketConfig.bracketSize) : '')
     };
 
     var tiebreakWrap = h('div', { class: 'field-group tiebreak-field', style: Number(c.bestOf.value) > 1 ? '' : 'display:none' });
@@ -5743,6 +5749,18 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     c.bestOf.addEventListener('change', function () {
       tiebreakWrap.style.display = Number(c.bestOf.value) > 1 ? '' : 'none';
     });
+
+    // dica dinâmica no fieldset de mata-mata
+    var bracketHint = h('p', { class: 'hint', style: 'margin:6px 0 0;grid-column:1/-1', dataset: { testid: 'bracket-hint' } });
+    function updateBracketHint() {
+      var size = Number(c.bracketSize.value) || 0;
+      if (!size) { bracketHint.textContent = ''; return; }
+      var label = { 4: 'Semifinal', 8: 'Quartas de final', 16: 'Oitavas de final' }[size] || (size + ' times');
+      bracketHint.innerHTML = '<strong>' + label + ' (' + size + ' times).</strong> No Sorteio, configure "Classificadas por grupo" para que o total de classificados chegue em ' + size + '. ' +
+        'Se não bater exato, o modo de repescagem acima resolve a diferença.';
+    }
+    c.bracketSize.addEventListener('change', updateBracketHint);
+    updateBracketHint();
 
     var submit = h('button', { type: 'submit', class: 'btn primary' }, isNew ? 'Criar categoria' : 'Salvar alterações');
     var form = h('form', { class: 'form grid', novalidate: true, dataset: { testid: 'category-form' }, onSubmit: async function (e) {
@@ -5758,7 +5776,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
             gender: c.gender.getRef(), level: c.level.getRef(), teamType: c.teamType.getRef(), modality: c.modality.value,
             teamsCount: c.teamsCount.value === '' ? null : Number(c.teamsCount.value),
             defaultMatchFormat: { bestOf: bestOf, pointsToWin: pts, tiebreakPoints: bestOf > 1 ? tbPts : null, minDiff: minD, maxPoints: maxP },
-            bracketConfig: c.bracketMode.value ? { bracketMode: c.bracketMode.value, templateKey: null } : null,
+            bracketConfig: (c.bracketMode.value || c.bracketSize.value) ? { bracketMode: c.bracketMode.value || null, templateKey: null, bracketSize: c.bracketSize.value ? Number(c.bracketSize.value) : null } : null,
             useAthletes: c.useAthletes.querySelector('input').checked, active: c.active ? c.active.querySelector('input').checked : true });
         });
         ui.toast(isNew ? 'Categoria criada.' : 'Categoria salva.');
@@ -5777,8 +5795,10 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         tiebreakWrap,
         ui.field({ name: 'minDiff', label: 'Diferença mínima', control: c.minDiff, hint: 'Pontos de vantagem para fechar o set. Padrão: 2.' }),
         ui.field({ name: 'maxPoints', label: 'Pontuação máxima', control: c.maxPoints, hint: 'Teto de pontos (ex.: 30). Vazio = sem limite.' })),
-      h('fieldset', { class: 'match-format-fieldset wide' }, h('legend', null, 'Fase eliminatória'),
-        ui.field({ name: 'bracketMode', label: 'Repescagem', control: c.bracketMode, hint: 'Usado quando o total de classificados não é potência de 2 (4, 8, 16…). Se não sabe, deixe Automático.' })),
+      h('fieldset', { class: 'match-format-fieldset wide', dataset: { testid: 'bracket-config-fieldset' } }, h('legend', null, 'Fase eliminatória'),
+        ui.field({ name: 'bracketSize', label: 'Formato', control: c.bracketSize, hint: 'Define quantas equipes disputam o mata-mata.' }),
+        ui.field({ name: 'bracketMode', label: 'Repescagem', control: c.bracketMode, hint: 'Usado quando o total de classificados não é potência de 2. Se não sabe, deixe Automático.' }),
+        bracketHint),
       h('div', { class: 'field wide', dataset: { field: 'useAthletes' } }, c.useAthletes, h('div', { class: 'error', role: 'alert' })),
       c.active ? h('div', { class: 'field wide', dataset: { field: 'active' } }, c.active, h('div', { class: 'hint' }, 'Categorias inativas ficam guardadas, mas fora das operações do evento.'), h('div', { class: 'error', role: 'alert' })) : null,
       h('div', { class: 'form-actions wide' }, submit, h('a', { class: 'btn', href: '#' + ui.tpath(t, '/categories') }, isNew ? 'Cancelar' : 'Voltar às categorias')));
@@ -6108,6 +6128,14 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       ui.field({ name: 'qualifiedPerGroup', label: 'Classificadas por grupo', control: inQ, required: true }),
       ui.field({ name: 'names', label: 'Nomes dos grupos (opcional)', control: inNames, hint: 'Separe por vírgula.' }),
       h('div', { class: 'wide hint', dataset: { testid: 'config-hint' } }, cfgHint),
+      (cat.bracketConfig && cat.bracketConfig.bracketSize) ? (function () {
+        var bs = cat.bracketConfig.bracketSize;
+        var bsLabel = { 4: 'Semifinal', 8: 'Quartas de final', 16: 'Oitavas de final' }[bs] || (bs + ' times');
+        var G = num(inG), Q = num(inQ), total = (G && Q) ? G * Q : null;
+        var totalTxt = total ? ' · total: ' + total + ' classificados' + (total === bs ? ' ✓' : ' ≠ ' + bs + ' ⚠') : '';
+        return h('div', { class: 'wide hint', style: 'color:#0369a1', dataset: { testid: 'bracket-size-hint' } },
+          '🏆 Alvo: ' + bsLabel + ' (' + bs + ' times)' + totalTxt + '. Ajuste "Classificadas por grupo" para o total bater.');
+      })() : null,
       h('div', { class: 'form-actions wide' }, saveBtn));
     var structure = h('section', { class: 'card' }, h('h2', null, 'Estrutura dos grupos'), cfgForm);
 
@@ -7378,7 +7406,18 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           } catch (err) { ui.toast(err.message || String(err), 'error'); }
         }
       }, 'Gerar fase eliminatória');
+      var totalQualified = (qualifiedPerGroup && data.standings) ? qualifiedPerGroup * data.standings.length : 0;
+      var configuredSize = cat.bracketConfig && cat.bracketConfig.bracketSize;
+      var bracketSizeWarn = configuredSize && totalQualified !== configuredSize
+        ? h('p', { class: 'hint', style: 'color:#b45309;margin:0 0 8px', dataset: { testid: 'bracket-size-warn' } },
+            '⚠ Alvo configurado: ' + configuredSize + ' times (' + ({ 4: 'Semifinal', 8: 'Quartas', 16: 'Oitavas' }[configuredSize] || configuredSize) + '). ' +
+            'Total classificado atual: ' + totalQualified + '. ' +
+            (totalQualified > configuredSize ? 'Reduza "Classificadas por grupo" no Sorteio.' : 'Aumente "Classificadas por grupo" no Sorteio ou use repescagem.'))
+        : (configuredSize && totalQualified === configuredSize
+            ? h('p', { class: 'hint', style: 'color:#15803d;margin:0 0 8px', dataset: { testid: 'bracket-size-ok' } }, '✓ ' + totalQualified + ' times classificados — bate com o formato ' + ({ 4: 'Semifinal', 8: 'Quartas de final', 16: 'Oitavas de final' }[configuredSize] || configuredSize) + '.')
+            : null);
       koSection = h('div', { class: 'ko-generate', dataset: { testid: 'ko-generate' } },
+        bracketSizeWarn,
         h('p', null, 'A fase de grupos está completa. Gere a fase eliminatória para continuar.'),
         templateEls.length ? h('div', { class: 'template-selector', style: 'margin:8px 0', dataset: { testid: 'template-selector' } },
           h('label', { style: 'font-weight:600;margin-right:8px' }, 'Cruzamento:'), templateEls) : null,
