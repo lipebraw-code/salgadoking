@@ -150,6 +150,34 @@ input:focus,select:focus{border-color:var(--primary)}
 .toast{background:#13213f;color:#fff;padding:11px 16px;border-radius:9px;box-shadow:0 8px 24px rgba(0,0,0,.25);font-weight:500;max-width:360px;border-left:4px solid #3ddc97}
 .toast.error{border-left-color:#ff6b81}
 
+/* ===== Wizard de criação de torneio ===== */
+.wz-steps{display:flex;align-items:flex-start;justify-content:center;gap:0;margin-bottom:28px;padding:4px 0}
+.wz-step{display:flex;flex-direction:column;align-items:center;gap:5px;position:relative;flex:1;max-width:120px}
+.wz-step:not(:last-child)::after{content:'';position:absolute;top:15px;left:calc(50% + 18px);right:calc(-50% + 18px);height:2px;background:rgba(255,255,255,.12);z-index:0}
+.wz-step.done:not(:last-child)::after{background:var(--primary)}
+.wz-dot{width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--muted);background:var(--card);position:relative;z-index:1;transition:all .2s}
+.wz-step.active .wz-dot{border-color:var(--primary);color:var(--primary);background:rgba(99,179,237,.12)}
+.wz-step.done .wz-dot{border-color:#3ddc97;background:#3ddc97;color:#0d1117}
+.wz-label{font-size:.68rem;font-weight:600;letter-spacing:.03em;color:var(--muted);text-transform:uppercase;text-align:center}
+.wz-step.active .wz-label{color:var(--primary)}
+.wz-step.done .wz-label{color:#3ddc97}
+.wz-body{display:flex;flex-direction:column;gap:16px}
+.wz-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.wz-cat-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.07)}
+.wz-cat-item .wz-cat-name{flex:1;font-weight:600}
+.wz-cat-delete{background:none;border:none;cursor:pointer;color:var(--muted);font-size:1rem;padding:2px 6px;border-radius:4px;transition:color .15s}
+.wz-cat-delete:hover{color:#ff6b81}
+.wz-add-row{display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap}
+.wz-add-row .field{margin:0;flex:1;min-width:140px}
+.wz-team-section{margin-bottom:16px}
+.wz-team-section h4{font-size:.85rem;font-weight:700;margin:0 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.wz-team-row{display:flex;gap:8px;align-items:center;padding:7px 10px;background:rgba(255,255,255,.03);border-radius:6px;margin-bottom:5px}
+.wz-team-row span{flex:1;font-size:.9rem}
+.wz-summary-cat{padding:10px 14px;background:rgba(255,255,255,.04);border-radius:8px;margin-bottom:10px}
+.wz-summary-cat h4{margin:0 0 6px;font-size:.88rem;font-weight:700}
+.wz-summary-cat ul{margin:0;padding-left:18px;font-size:.85rem;color:var(--muted)}
+.wz-empty-hint{color:var(--muted);font-size:.85rem;font-style:italic;padding:8px 0}
+
 /* ===== Bottom Navigation — mobile ===== */
 .bottom-nav{display:none}
 .bn-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);z-index:200;display:none}
@@ -5657,7 +5685,246 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
       content: h('div', { class: 'narrow' }, h('div', { class: 'page-head' }, h('h1', null, existing ? 'Editar torneio' : 'Novo torneio'),
         h('p', { class: 'muted' }, existing ? 'Altere os dados gerais do torneio.' : 'Informe os dados gerais. As categorias são criadas em seguida.')), h('div', { class: 'card' }, form)) };
   }
-  ui.route('/tournaments/new', tournamentForm);
+  // ---------- Wizard de criação de torneio ----------
+  async function wizardView(ctx) {
+    var step = 0;
+    var wdata = {
+      tournament: { name: '', startDate: '', endDate: '', venue: '', modality: 'quadra' },
+      categories: [],
+      teams: {}
+    };
+
+    var container = h('div', { class: 'wz-wrap' });
+
+    function stepIndicator() {
+      var labels = ['Dados', 'Categorias', 'Equipes', 'Confirmar'];
+      return h('div', { class: 'wz-steps' }, labels.map(function (label, i) {
+        var cls = 'wz-step' + (i < step ? ' done' : i === step ? ' active' : '');
+        return h('div', { class: cls },
+          h('div', { class: 'wz-dot' }, i < step ? '✓' : String(i + 1)),
+          h('div', { class: 'wz-label' }, label));
+      }));
+    }
+
+    function navButtons(prevLabel, nextLabel, onNext, nextClass) {
+      var row = h('div', { class: 'wz-actions' });
+      if (step > 0) {
+        row.appendChild(h('button', { type: 'button', class: 'btn', onClick: function () { step--; render(); } }, prevLabel || '← Voltar'));
+      } else {
+        row.appendChild(h('a', { class: 'btn', href: '#/dashboard' }, 'Cancelar'));
+      }
+      var nb = h('button', { type: 'button', class: 'btn ' + (nextClass || 'primary'), onClick: onNext }, nextLabel || 'Avançar →');
+      row.appendChild(nb);
+      return row;
+    }
+
+    function renderStep0() {
+      var d = wdata.tournament;
+      var inp = {
+        name: ui.textInput('name', d.name, { placeholder: 'Ex.: Nata do Vôlei 2026', maxlength: 120 }),
+        startDate: h('input', { type: 'date', name: 'startDate', value: d.startDate }),
+        endDate: h('input', { type: 'date', name: 'endDate', value: d.endDate }),
+        venue: ui.textInput('venue', d.venue, { placeholder: 'Ex.: Arena Praia, São Luís' }),
+        modality: ui.select('modality', ui.enumOptions('MODALITY', ui.labels.modality), d.modality)
+      };
+      var errEl = h('p', { class: 'field-error', style: 'display:none' });
+      function next() {
+        var name = inp.name.value.trim();
+        if (!name) { errEl.textContent = 'O nome do torneio é obrigatório.'; errEl.style.display = ''; inp.name.focus(); return; }
+        if (!inp.startDate.value) { errEl.textContent = 'A data inicial é obrigatória.'; errEl.style.display = ''; inp.startDate.focus(); return; }
+        wdata.tournament = { name: name, startDate: inp.startDate.value, endDate: inp.endDate.value, venue: inp.venue.value.trim(), modality: inp.modality.value };
+        step = 1; render();
+      }
+      return h('div', { class: 'wz-body' },
+        h('div', { class: 'form grid' },
+          ui.field({ name: 'name', label: 'Nome do torneio', control: inp.name, required: true, wide: true }),
+          ui.field({ name: 'startDate', label: 'Data inicial', control: inp.startDate, required: true }),
+          ui.field({ name: 'endDate', label: 'Data final', control: inp.endDate }),
+          ui.field({ name: 'venue', label: 'Local', control: inp.venue, wide: true }),
+          ui.field({ name: 'modality', label: 'Modalidade', control: inp.modality, required: true })),
+        errEl,
+        navButtons(null, 'Avançar →', next));
+    }
+
+    function renderStep1() {
+      var listEl = h('div', { class: 'stack' });
+      function refreshList() {
+        while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+        if (!wdata.categories.length) {
+          listEl.appendChild(h('p', { class: 'wz-empty-hint' }, 'Nenhuma categoria adicionada. Você pode pular e adicionar depois.'));
+        } else {
+          wdata.categories.forEach(function (cat, idx) {
+            var del = h('button', { type: 'button', class: 'wz-cat-delete', title: 'Remover', onClick: function () {
+              wdata.categories.splice(idx, 1);
+              delete wdata.teams[idx];
+              var reindexed = {};
+              Object.keys(wdata.teams).forEach(function (k) {
+                var n = Number(k); reindexed[n > idx ? n - 1 : n] = wdata.teams[k];
+              });
+              wdata.teams = reindexed;
+              refreshList();
+            } }, '✕');
+            listEl.appendChild(h('div', { class: 'wz-cat-item' },
+              h('div', { class: 'wz-cat-name' }, cat.name),
+              h('div', { class: 'muted small' }, ui.label(ui.labels.modality, cat.modality) + (cat.teamsCount ? ' · ' + cat.teamsCount + ' equipes' : '')),
+              del));
+          });
+        }
+      }
+      refreshList();
+
+      var nameIn = ui.textInput('catName', '', { placeholder: 'Ex.: Feminino Sub-17', maxlength: 80 });
+      var modIn = ui.select('catMod', ui.enumOptions('MODALITY', ui.labels.modality), wdata.tournament.modality);
+      var cntIn = h('input', { type: 'number', name: 'teamsCount', min: 2, max: 64, placeholder: 'Qtd (opcional)' });
+      var addBtn = h('button', { type: 'button', class: 'btn primary', onClick: function () {
+        var n = nameIn.value.trim();
+        if (!n) { nameIn.focus(); return; }
+        wdata.categories.push({ name: n, modality: modIn.value, teamsCount: cntIn.value ? Number(cntIn.value) : null });
+        nameIn.value = ''; cntIn.value = '';
+        refreshList();
+      } }, '+ Adicionar');
+
+      return h('div', { class: 'wz-body' },
+        h('p', { class: 'muted small' }, 'Adicione as categorias do torneio (Ex.: Masculino A, Feminino B…). Pode deixar em branco e adicionar depois.'),
+        listEl,
+        h('div', { class: 'card', style: 'padding:14px' },
+          h('p', { style: 'font-weight:600;margin:0 0 10px' }, 'Nova categoria'),
+          h('div', { class: 'wz-add-row' },
+            ui.field({ name: 'catName', label: 'Nome', control: nameIn }),
+            ui.field({ name: 'catMod', label: 'Modalidade', control: modIn }),
+            ui.field({ name: 'teamsCount', label: 'Nº de equipes', control: cntIn }),
+            addBtn)),
+        navButtons('← Voltar', 'Avançar →', function () { step = 2; render(); }));
+    }
+
+    function renderStep2() {
+      if (!wdata.categories.length) {
+        return h('div', { class: 'wz-body' },
+          h('p', { class: 'muted' }, 'Nenhuma categoria criada. Você poderá adicionar equipes depois de criar o torneio.'),
+          navButtons('← Voltar', 'Avançar →', function () { step = 3; render(); }));
+      }
+
+      var tabIdx = 0;
+      var tabsEl = h('div', { class: 'tabs' });
+      var panelsEl = h('div', null);
+
+      function renderTabs() {
+        while (tabsEl.firstChild) tabsEl.removeChild(tabsEl.firstChild);
+        while (panelsEl.firstChild) panelsEl.removeChild(panelsEl.firstChild);
+        wdata.categories.forEach(function (cat, ci) {
+          var tb = h('button', { type: 'button', class: 'tab' + (ci === tabIdx ? ' active' : ''), onClick: function () { tabIdx = ci; renderTabs(); } }, cat.name);
+          tabsEl.appendChild(tb);
+        });
+        wdata.categories.forEach(function (cat, ci) {
+          if (!wdata.teams[ci]) wdata.teams[ci] = [];
+          var teams = wdata.teams[ci];
+          var panel = h('div', { style: ci === tabIdx ? '' : 'display:none' });
+          var listEl2 = h('div', { class: 'stack', style: 'margin-bottom:10px' });
+          function refreshTeams() {
+            while (listEl2.firstChild) listEl2.removeChild(listEl2.firstChild);
+            if (!teams.length) { listEl2.appendChild(h('p', { class: 'wz-empty-hint' }, 'Nenhuma equipe. Adicione abaixo ou deixe para depois.')); return; }
+            teams.forEach(function (tm, ti) {
+              var del2 = h('button', { type: 'button', class: 'wz-cat-delete', title: 'Remover', onClick: function () { teams.splice(ti, 1); refreshTeams(); } }, '✕');
+              listEl2.appendChild(h('div', { class: 'wz-team-row' }, h('span', null, tm.name), del2));
+            });
+          }
+          refreshTeams();
+          var tmIn = ui.textInput('teamName', '', { placeholder: 'Nome da equipe' });
+          var addTm = h('button', { type: 'button', class: 'btn primary', onClick: function () {
+            var n = tmIn.value.trim(); if (!n) { tmIn.focus(); return; }
+            teams.push({ name: n }); tmIn.value = ''; refreshTeams();
+          } }, '+ Adicionar');
+          tmIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); addTm.click(); } });
+          panel.appendChild(h('div', { class: 'wz-team-section' },
+            h('h4', null, cat.name),
+            listEl2,
+            h('div', { class: 'wz-add-row', style: 'margin-top:6px' }, ui.field({ name: 'teamName', label: 'Nova equipe', control: tmIn }), addTm)));
+          panelsEl.appendChild(panel);
+        });
+      }
+      renderTabs();
+
+      return h('div', { class: 'wz-body' },
+        h('p', { class: 'muted small' }, 'Adicione as equipes de cada categoria. Pode pular e cadastrar depois.'),
+        tabsEl, panelsEl,
+        navButtons('← Voltar', 'Avançar →', function () { step = 3; render(); }));
+    }
+
+    function renderStep3() {
+      var d = wdata.tournament;
+      var summaryItems = [
+        h('div', null, h('dt', null, 'Nome'), h('dd', null, d.name)),
+        h('div', null, h('dt', null, 'Data'), h('dd', null, d.startDate + (d.endDate ? ' → ' + d.endDate : ''))),
+        d.venue ? h('div', null, h('dt', null, 'Local'), h('dd', null, d.venue)) : null,
+        h('div', null, h('dt', null, 'Modalidade'), h('dd', null, ui.label(ui.labels.modality, d.modality)))
+      ];
+
+      var catSummary = wdata.categories.length
+        ? wdata.categories.map(function (cat, ci) {
+            var teams = wdata.teams[ci] || [];
+            return h('div', { class: 'wz-summary-cat' },
+              h('h4', null, cat.name + ' (' + ui.label(ui.labels.modality, cat.modality) + ')'),
+              teams.length
+                ? h('ul', null, teams.map(function (tm) { return h('li', null, tm.name); }))
+                : h('p', { class: 'wz-empty-hint' }, 'Sem equipes'));
+          })
+        : [h('p', { class: 'wz-empty-hint' }, 'Nenhuma categoria — você adicionará depois.')];
+
+      var saveBtn = h('button', { type: 'button', class: 'btn primary', onClick: async function () {
+        saveBtn.disabled = true;
+        try {
+          await ctx.run(async function () {
+            var r = await ctx.store.createTournament({ name: d.name, startDate: d.startDate, endDate: d.endDate, venue: d.venue, modality: d.modality });
+            var t = r.tournament;
+            for (var ci = 0; ci < wdata.categories.length; ci++) {
+              var cat = wdata.categories[ci];
+              var saved = await ctx.store.saveCategory({ tournamentId: t.id, name: cat.name, modality: cat.modality, teamsCount: cat.teamsCount || null });
+              var catId = saved.id;
+              var catTeams = wdata.teams[ci] || [];
+              for (var ti = 0; ti < catTeams.length; ti++) {
+                await ctx.store.saveTeam({ categoryId: catId, name: catTeams[ti].name, athletes: [] });
+              }
+            }
+            ui.toast('Torneio criado com sucesso!');
+            await ctx.navigate(ui.tpath(t));
+          });
+        } catch (err) {
+          ui.toast(err.message || 'Erro ao salvar.', 'error');
+          saveBtn.disabled = false;
+        }
+      } }, 'Criar torneio ✓');
+
+      return h('div', { class: 'wz-body' },
+        h('div', { class: 'card', style: 'padding:14px' },
+          h('h3', { style: 'margin:0 0 10px' }, 'Dados do torneio'),
+          h('dl', { class: 'meta stacked' }, summaryItems)),
+        wdata.categories.length ? h('div', null, h('h3', { style: 'margin:0 0 10px' }, 'Categorias e equipes'), h('div', null, catSummary)) : catSummary[0],
+        h('div', { class: 'wz-actions' },
+          h('button', { type: 'button', class: 'btn', onClick: function () { step = 2; render(); } }, '← Voltar'),
+          saveBtn));
+    }
+
+    function render() {
+      while (container.firstChild) container.removeChild(container.firstChild);
+      container.appendChild(stepIndicator());
+      var body;
+      if (step === 0) body = renderStep0();
+      else if (step === 1) body = renderStep1();
+      else if (step === 2) body = renderStep2();
+      else body = renderStep3();
+      container.appendChild(body);
+    }
+
+    render();
+
+    return { title: 'Novo torneio', section: 'tournaments',
+      crumbs: [{ label: 'Dashboard', href: '/dashboard' }, { label: 'Novo torneio' }],
+      content: h('div', { class: 'narrow' },
+        h('div', { class: 'page-head' }, h('h1', null, 'Novo torneio'), h('p', { class: 'muted' }, 'Configure o torneio em 4 passos.')),
+        h('div', { class: 'card' }, container)) };
+  }
+
+  ui.route('/tournaments/new', wizardView);
   ui.route('/tournaments/:tid/edit', tournamentForm);
 
   // ---------- Visão geral do torneio ----------
