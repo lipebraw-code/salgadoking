@@ -623,6 +623,8 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         var merged = Object.assign({}, ACCESS_DEFAULTS, saved);
         // campos com default não-vazio: só usa o salvo se não estiver vazio
         ['githubOwner','githubRepo'].forEach(function(k) { if (!merged[k]) merged[k] = ACCESS_DEFAULTS[k]; });
+        // nome do produto sempre vem do código, nunca do localStorage
+        merged.torneio = ACCESS_DEFAULTS.torneio;
         return merged;
       }
     } catch(e){}
