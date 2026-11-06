@@ -345,8 +345,8 @@
     {
       "id": "mch_7d02fb44-385c-413d-af21-fa8ff77400ec",
       "createdAt": "2026-11-04T02:14:48.657Z",
-      "updatedAt": "2026-11-04T17:40:43.431Z",
-      "revision": 2,
+      "updatedAt": "2026-11-06T20:20:27.021Z",
+      "revision": 3,
       "categoryId": "cat_8249fde2-8189-4490-9eed-66b9afd2dcbe",
       "phaseId": "ph_2e370674-8d93-4a54-a022-ce826d9b7d2f",
       "groupId": "grp_85f079ce-6ef3-4cef-a381-2a1be41ca6c5",
@@ -365,8 +365,13 @@
         "time": null,
         "court": null
       },
-      "status": "andamento",
-      "sets": [],
+      "status": "finalizado",
+      "sets": [
+        {
+          "a": 18,
+          "b": 15
+        }
+      ],
       "resultType": "normal",
       "resultDetail": null
     },
@@ -401,8 +406,8 @@
     {
       "id": "mch_54f9d148-8695-4623-b3ff-6c8562a1ae73",
       "createdAt": "2026-11-04T02:14:48.662Z",
-      "updatedAt": "2026-11-04T02:14:48.662Z",
-      "revision": 1,
+      "updatedAt": "2026-11-06T20:19:34.535Z",
+      "revision": 2,
       "categoryId": "cat_8249fde2-8189-4490-9eed-66b9afd2dcbe",
       "phaseId": "ph_2e370674-8d93-4a54-a022-ce826d9b7d2f",
       "groupId": "grp_bac557fb-2428-4869-b8e2-b0c221c076cf",
@@ -421,7 +426,7 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
+      "status": "andamento",
       "sets": [],
       "resultType": "normal",
       "resultDetail": null
@@ -429,8 +434,8 @@
     {
       "id": "mch_d55fa8d9-b7d5-4f02-9679-0376bd887eb6",
       "createdAt": "2026-11-04T02:14:48.664Z",
-      "updatedAt": "2026-11-04T02:14:48.664Z",
-      "revision": 1,
+      "updatedAt": "2026-11-06T20:19:38.535Z",
+      "revision": 2,
       "categoryId": "cat_8249fde2-8189-4490-9eed-66b9afd2dcbe",
       "phaseId": "ph_2e370674-8d93-4a54-a022-ce826d9b7d2f",
       "groupId": "grp_bac557fb-2428-4869-b8e2-b0c221c076cf",
@@ -449,7 +454,7 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
+      "status": "andamento",
       "sets": [],
       "resultType": "normal",
       "resultDetail": null
@@ -457,8 +462,8 @@
     {
       "id": "mch_89301c9e-e77f-403a-b1da-ea0c0a313035",
       "createdAt": "2026-11-04T02:14:48.666Z",
-      "updatedAt": "2026-11-04T02:14:48.666Z",
-      "revision": 1,
+      "updatedAt": "2026-11-06T20:19:40.902Z",
+      "revision": 2,
       "categoryId": "cat_8249fde2-8189-4490-9eed-66b9afd2dcbe",
       "phaseId": "ph_2e370674-8d93-4a54-a022-ce826d9b7d2f",
       "groupId": "grp_bac557fb-2428-4869-b8e2-b0c221c076cf",
@@ -477,7 +482,7 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
+      "status": "andamento",
       "sets": [],
       "resultType": "normal",
       "resultDetail": null
@@ -485,8 +490,8 @@
     {
       "id": "mch_5cbf896c-ce58-45b3-a59d-47aa32ee7b89",
       "createdAt": "2026-11-04T02:14:48.668Z",
-      "updatedAt": "2026-11-04T02:14:48.668Z",
-      "revision": 1,
+      "updatedAt": "2026-11-06T20:19:43.801Z",
+      "revision": 2,
       "categoryId": "cat_8249fde2-8189-4490-9eed-66b9afd2dcbe",
       "phaseId": "ph_2e370674-8d93-4a54-a022-ce826d9b7d2f",
       "groupId": "grp_bac557fb-2428-4869-b8e2-b0c221c076cf",
@@ -505,7 +510,7 @@
         "time": null,
         "court": null
       },
-      "status": "aguardando",
+      "status": "andamento",
       "sets": [],
       "resultType": "normal",
       "resultDetail": null
@@ -1504,5 +1509,5 @@
       "status": "configuracao"
     }
   ],
-  "publishedAt": "2026-11-06T14:39:05.024Z"
+  "publishedAt": "2026-11-06T20:20:29.546Z"
 }
