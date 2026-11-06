@@ -7174,7 +7174,20 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           rows.map(function (m) { return matchCard(m, teamsById, ctx, matchesById, t, cat); }));
       };
 
-      function makeAccordion(label, rows, startOpen) {
+      var acKey = 'sp_open_groups_' + cat.id;
+      var openGroups;
+      try { openGroups = JSON.parse(sessionStorage.getItem(acKey) || 'null'); } catch(e) { openGroups = null; }
+
+      function saveOpenGroups(gid, isOpen) {
+        try {
+          var cur = JSON.parse(sessionStorage.getItem(acKey) || '{}');
+          cur[gid] = isOpen;
+          sessionStorage.setItem(acKey, JSON.stringify(cur));
+        } catch(e) {}
+      }
+
+      function makeAccordion(label, rows, gid, defaultOpen) {
+        var startOpen = openGroups ? !!openGroups[gid] : defaultOpen;
         var chevron = h('span', { class: 'gm-chevron' }, '▼');
         var badge = h('span', { class: 'badge muted', style: 'font-size:.7rem' }, rows.length + (rows.length === 1 ? ' jogo' : ' jogos'));
         var title = h('h3', { class: 'group-matches-title' },
@@ -7183,6 +7196,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         var wrap = h('div', { class: 'group-matches' + (startOpen ? ' open' : '') });
         title.addEventListener('click', function () {
           wrap.classList.toggle('open');
+          saveOpenGroups(gid, wrap.classList.contains('open'));
         });
         wrap.appendChild(title);
         wrap.appendChild(body);
@@ -7197,7 +7211,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           var g = groupsById[gid];
           var label = 'Chave ' + (g ? g.name : gid);
           if (useAccordion) {
-            sections.push(makeAccordion(label, byGroup[gid], idx === 0));
+            sections.push(makeAccordion(label, byGroup[gid], gid, idx === 0));
           } else {
             sections.push(h('div', { class: 'group-matches solo', dataset: { groupId: gid } },
               h('h3', { class: 'group-matches-title' }, label),
@@ -7221,10 +7235,10 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         Object.keys(byRound).map(Number).sort(function (a, b) { return a - b; }).forEach(function (rn) {
           var rm = byRound[rn];
           var roundName = KO_NAMES[rm.length * 2] || ('Rodada ' + rn);
-          sections.push(makeAccordion(roundName, rm, true));
+          sections.push(makeAccordion(roundName, rm, '_ko_' + rn, true));
         });
         if (thirdPlaceMatches.length) {
-          sections.push(makeAccordion('Disputa de 3º lugar', thirdPlaceMatches, true));
+          sections.push(makeAccordion('Disputa de 3º lugar', thirdPlaceMatches, '_ko_3rd', true));
         }
       }
       if (sections.length > 1 || (sections.length === 1 && groupIds.length)) {
