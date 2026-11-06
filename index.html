@@ -253,8 +253,18 @@ input:focus,select:focus{border-color:var(--primary)}
 .group-heading .group-name{font-size:1.05rem} .group-heading .group-progress{font-size:.78rem}
 .qualified-hint{font-size:.82rem;color:var(--muted);margin:4px 0 0}
 .matches-summary{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:.88rem;flex-wrap:wrap}
-.group-matches{margin-bottom:24px}
-.group-matches-title{font-size:1rem;font-weight:600;margin:16px 0 8px;padding-bottom:4px;border-bottom:2px solid var(--border)}
+.group-matches{margin-bottom:8px;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.group-matches-title{font-size:.95rem;font-weight:700;margin:0;padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;background:rgba(255,255,255,.03);transition:background .15s}
+.group-matches-title:hover{background:rgba(255,255,255,.06)}
+.group-matches-title .gm-chevron{font-size:.75rem;transition:transform .2s;color:var(--muted)}
+.group-matches.open .gm-chevron{transform:rotate(180deg)}
+.group-matches-body{display:none;padding:10px 12px 12px}
+.group-matches.open .group-matches-body{display:block}
+/* seção única (sem acordeão): mantém visual simples */
+.group-matches.solo{border:none;border-radius:0}
+.group-matches.solo .group-matches-title{cursor:default;background:none;border-bottom:2px solid var(--border);padding:16px 0 4px;font-size:1rem}
+.group-matches.solo .group-matches-title:hover{background:none}
+.group-matches.solo .group-matches-body{display:block;padding:0}
 /* Match cards */
 .match-cards{display:flex;flex-direction:column;gap:8px}
 .match-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:box-shadow .15s}
@@ -7163,13 +7173,37 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         return h('div', { class: 'match-cards' },
           rows.map(function (m) { return matchCard(m, teamsById, ctx, matchesById, t, cat); }));
       };
+
+      function makeAccordion(label, rows, startOpen) {
+        var chevron = h('span', { class: 'gm-chevron' }, '▼');
+        var badge = h('span', { class: 'badge muted', style: 'font-size:.7rem' }, rows.length + (rows.length === 1 ? ' jogo' : ' jogos'));
+        var title = h('h3', { class: 'group-matches-title' },
+          h('span', { style: 'display:flex;align-items:center;gap:10px' }, label, badge), chevron);
+        var body = h('div', { class: 'group-matches-body' }, makeTable(rows));
+        var wrap = h('div', { class: 'group-matches' + (startOpen ? ' open' : '') });
+        title.addEventListener('click', function () {
+          wrap.classList.toggle('open');
+        });
+        wrap.appendChild(title);
+        wrap.appendChild(body);
+        return wrap;
+      }
+
       var sections = [];
+      var useAccordion = false;
       if (groupIds.length) {
-        groupIds.forEach(function (gid) {
+        useAccordion = groupIds.length > 1;
+        groupIds.forEach(function (gid, idx) {
           var g = groupsById[gid];
-          sections.push(h('div', { class: 'group-matches', dataset: { groupId: gid } },
-            h('h3', { class: 'group-matches-title' }, 'Chave ' + (g ? g.name : gid)),
-            makeTable(byGroup[gid])));
+          var label = 'Chave ' + (g ? g.name : gid);
+          if (useAccordion) {
+            var hasLive = byGroup[gid].some(function (m) { return m.status === 'andamento'; });
+            sections.push(makeAccordion(label, byGroup[gid], idx === 0 || hasLive));
+          } else {
+            sections.push(h('div', { class: 'group-matches solo', dataset: { groupId: gid } },
+              h('h3', { class: 'group-matches-title' }, label),
+              h('div', { class: 'group-matches-body' }, makeTable(byGroup[gid]))));
+          }
         });
       }
       if (koMatches.length) {
@@ -7188,14 +7222,10 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
         Object.keys(byRound).map(Number).sort(function (a, b) { return a - b; }).forEach(function (rn) {
           var rm = byRound[rn];
           var roundName = KO_NAMES[rm.length * 2] || ('Rodada ' + rn);
-          sections.push(h('div', { class: 'group-matches', dataset: { groupId: '_ko_' + rn } },
-            h('h3', { class: 'group-matches-title' }, roundName),
-            makeTable(rm)));
+          sections.push(makeAccordion(roundName, rm, true));
         });
         if (thirdPlaceMatches.length) {
-          sections.push(h('div', { class: 'group-matches', dataset: { groupId: '_ko_3rd' } },
-            h('h3', { class: 'group-matches-title' }, 'Disputa de 3º lugar'),
-            makeTable(thirdPlaceMatches)));
+          sections.push(makeAccordion('Disputa de 3º lugar', thirdPlaceMatches, true));
         }
       }
       if (sections.length > 1 || (sections.length === 1 && groupIds.length)) {
