@@ -7,9 +7,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ERP Vôlei</title>
+<title>SalPoint</title>
 <style>
-/* ERP Vôlei — estilos. Desktop primeiro; responsivo básico (<900px). */
+/* SalPoint — estilos. Desktop primeiro; responsivo básico (<900px). */
 :root{
   --bg:#f0f2f5; --surface:#fff; --text:#111827; --muted:#6b7280; --border:#e5e7eb; --border-strong:#d1d5db;
   --primary:#16a34a; --primary-dark:#15803d; --primary-soft:#dcfce7; --accent:#d97706; --accent-soft:#fef3c7;
@@ -609,7 +609,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     senhaAdmin:   'SalgadoKing07',
     inicio:       '2026-11-01 16:20',
     duracaoHoras: 20,
-    torneio:      'ERP Vôlei — Torneio',
+    torneio:      'SalPoint — Torneio',
     viewUrl:      '',
     githubOwner:  'lipebraw-code',
     githubRepo:   'salgadoking',
@@ -5268,7 +5268,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     ui.clear(this.rootEl);
     this.rootEl.appendChild(h('div', { class: 'app' },
       h('aside', { class: 'sidebar' },
-        h('a', { class: 'brand', href: '#/dashboard' }, h('span', { class: 'brand-mark' }, '🏐'), h('span', null, h('strong', null, 'ERP Vôlei'), h('small', null, 'Gestão de torneios'))),
+        h('a', { class: 'brand', href: '#/dashboard' }, h('span', { class: 'brand-mark' }, '🏐'), h('span', null, h('strong', null, 'SalPoint'), h('small', null, 'Gestão de torneios'))),
         this.nav,
         h('div', { class: 'side-foot' }, h('span', { class: 'dot' }), 'Funciona sem internet', h('br'), 'Dados salvos neste aparelho')),
       h('div', { class: 'main' }, h('header', { class: 'topbar' }, this.crumbs, this.actions), this.tbar, this.view)));
@@ -5345,7 +5345,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
     else this.rootEl.classList.remove('view-fullscreen');
     if (r.section === 'tv') this.rootEl.classList.add('tv-fullscreen');
     else this.rootEl.classList.remove('tv-fullscreen');
-    root.document.title = (r.title ? r.title + ' · ' : '') + 'ERP Vôlei';
+    root.document.title = (r.title ? r.title + ' · ' : '') + 'SalPoint';
     // barra lateral
     var isAdmin; try { isAdmin = sessionStorage.getItem('erp_acesso_ok') === 'admin'; } catch(e) { isAdmin = true; }
     ui.clear(this.nav);
