@@ -7197,8 +7197,7 @@ input:focus,select:focus{border-color:var(--primary);outline:none}
           var g = groupsById[gid];
           var label = 'Chave ' + (g ? g.name : gid);
           if (useAccordion) {
-            var hasLive = byGroup[gid].some(function (m) { return m.status === 'andamento'; });
-            sections.push(makeAccordion(label, byGroup[gid], idx === 0 || hasLive));
+            sections.push(makeAccordion(label, byGroup[gid], idx === 0));
           } else {
             sections.push(h('div', { class: 'group-matches solo', dataset: { groupId: gid } },
               h('h3', { class: 'group-matches-title' }, label),
